@@ -1,2 +1,3 @@
-# hub-mirror
-github workflow  for mirroring repos between Hubs.
+## hub-mirror
+
+Github's workflows for mirroring repos between Hubs.

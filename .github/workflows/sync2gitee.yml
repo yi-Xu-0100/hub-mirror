@@ -38,3 +38,6 @@ jobs:
         cache_path: /github/workspace/hub-mirror-cache
         static_list: 'hub-mirror,soulsign-scripts,test,hugo-theme-whiteink,www.yixuju.cn,soulsign-scripts,Learn-for-coding,Application-Lists'
         force_update: true
+    - name: Print cache path
+      run: |
+        ls -la /home/runner/work/hub-mirror-action/hub-mirror-action/hub-mirror-cache

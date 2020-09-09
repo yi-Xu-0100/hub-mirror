@@ -1,7 +1,7 @@
 on:
   push:
     # delete this item if you don't want to trigger this workflow when modify this repo
-    branches: master
+    branches: main
   schedule:
     # * is a special character in YAML so you have to quote this string
     # UTC 17:00 -> CST (China) 1:00, see https://datetime360.com/cn/utc-cst-china-time/
@@ -19,12 +19,13 @@ jobs:
       uses: actions/cache@v2.1.1
       id: cache
       with:
-        path: /home/runner/work/hub-mirror-action/hub-mirror-action/hub-mirror-cache
+        path: /home/runner/work/hub-mirror/hub-mirror/hub-mirror-cache
         key: ${{ runner.os }}-hub-mirror-cache
 
     - name: Print the cache status
       if: steps.cache.outputs.cache-hit == 'true'
-      run: echo "Cached successfully."
+      run: |
+        echo "Cached successfully."
 
     - name: Mirror the Github repos to Gitee with cache
       uses: Yikun/hub-mirror-action@v0.09
@@ -35,9 +36,5 @@ jobs:
         dst_token: ${{ secrets.GITEE_TOKEN }}
         account_type: user
         cache_path: /github/workspace/hub-mirror-cache
-        static_list: 'hub-mirror,soulsign-chrome,soulsign-scripts,test,hugo-theme-whiteink,yixuju,www.yixuju.cn,soulsign-scripts,Learn-for-coding,Application-Lists'
+        static_list: 'hub-mirror,soulsign-scripts,test,hugo-theme-whiteink,www.yixuju.cn,soulsign-scripts,Learn-for-coding,Application-Lists'
         force_update: true
-
-    - name: Print cache path
-      run: |
-        ls -la /home/runner/work/hub-mirror-action/hub-mirror-action/hub-mirror-cache

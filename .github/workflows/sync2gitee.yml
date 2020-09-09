@@ -40,4 +40,4 @@ jobs:
         force_update: true
     - name: Print cache path
       run: |
-        ls -la /home/runner/work/hub-mirror-action/hub-mirror-action
+        ls -la /home/runner/work/hub-mirror/hub-mirror/hub-mirror-cache

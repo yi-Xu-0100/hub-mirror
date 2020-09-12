@@ -19,7 +19,7 @@ jobs:
       uses: actions/cache@v2.1.1
       id: cache
       with:
-        path: /home/runner/work/hub-mirror/hub-mirror/hub-mirror-cache
+        path: ${{ github.workspace }}/hub-mirror-cache
         key: ${{ runner.os }}-hub-mirror-cache
 
     - name: Print the cache status
@@ -40,4 +40,4 @@ jobs:
         force_update: true
     - name: Print cache path
       run: |
-        ls -la /home/runner/work/hub-mirror/hub-mirror/hub-mirror-cache
+        ls -la ${{ github.workspace }}/hub-mirror-cache

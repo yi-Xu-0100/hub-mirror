@@ -6,6 +6,8 @@
 
 Template usage repository of [github action-hub-mirror-action](https://github.com/Yikun/hub-mirror-action), you can manage the mirror repositories actions between `GitHub` with other `hub`.
 
+PS: This template repository only uses part of parameters configuring synchronization workflows. The parameters of `.github/workflows/sync2gitee.yml` need to be modified and configured by yourself to complete the personal workflows configuration.
+
 ## Configuration parameter
 
 ### `src`(required)
@@ -54,13 +56,17 @@ Take `Gitee` as an example, get the token and add it to `GitHub`.
 
 1. Generate a `GITEE_TOKEN` through `personal access token` in the `Gitee` **personal settings**, and copy the token content to the value area.
 
-   The token only appears once, please save it(it can be generated multiple times).
+   PS: The token only appears once, please save it(it can be generated multiple times).
 
    ![Generate a personal access token](./static/secret_key.png)
 
 2. Add the token to the `GitHub` repository, create a `GITEE_TOKEN` variable through the `Secrets` in the `GitHub` **repository settings**, and copy the private key content to the value area.
 
    ![Add the token](./static/secret_key_1.png)
+
+### `static_list` (recommended)
+
+`static_list`  is repos only mirror, but don't get list from repo api dynamically (the white/black list is still available), like 'repo1,repo2,repo3'.
 
 ## Thanks
 

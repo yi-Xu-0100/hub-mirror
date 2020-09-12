@@ -6,23 +6,25 @@
 
 使用 [github action - hub-mirror-action](https://github.com/Yikun/hub-mirror-action) 的模板仓库，可以管理当前 `GitHub` 与其他的 `hub` 的存储库的镜像同步。
 
+PS：当前的模板仓库仅使用了部分参数配置同步指令，`.github/workflows/sync2gitee.yml` 的参数需要自行修改和配置以完成个人的流程使用。
+
 ## 配置参数
 
 ### `src`(需要)
 
-源账户，例如 `github/yi-Xu-0100` ，是 `GitHub` 中 `yi-Xu-0100` 账户。
+需要被同步的源端账户名，例如 `github/yi-Xu-0100` ，是 `GitHub` 中 `yi-Xu-0100` 账户。
 
 ![GitHub 账户名](./static/github_name.png)
 
 ### `dst`(需要)
 
-目标账户，例如 `gitee/yiXu0100` ，是 `Gitee` 中 `yiXu0100` 账户。
+需要同步到的目的端账户名，例如 `gitee/yiXu0100` ，是 `Gitee` 中 `yiXu0100` 账户。
 
 ![Gitee 账户名](./static/gitee_name.png)
 
 ### `dst_key`(需要)
 
-`dst_key` 是在目标账户中推送代码的 `SSH` 密钥，你可以在 [这里](https://github.com/settings/keys) 中获得 `GitHub` 的 `SSH` 密钥配置，在 [这里](https://gitee.com/profile/sshkeys) 中获得 `Gitee` 的 `SSH` 密钥配置。
+`dst_key` 是用于目的端上传代码的 `SSH key` ，用于上传代码，你可以在 [这里](https://github.com/settings/keys) 中获得 `GitHub` 的 `SSH` 密钥配置，在 [这里](https://gitee.com/profile/sshkeys) 中获得 `Gitee` 的 `SSH` 密钥配置。
 
 #### 设置 `dst_key`
 
@@ -46,15 +48,15 @@
 
 ### `dst_token`(需要)
 
-`dst_token` 是 `API` 令牌以创建不存在的仓库。你可以在 [这里](https://github.com/settings/tokens) 中获得 `GitHub` 令牌，并在 [这里](https://gitee.com/profile/personal_access_tokens) 中获得 `Gitee` 令牌。
+`dst_token` 是 创建仓库的 `API tokens`， 用于自动创建不存在的仓库。你可以在 [这里](https://github.com/settings/tokens) 中获得 `GitHub` 令牌，并在 [这里](https://gitee.com/profile/personal_access_tokens) 中获得 `Gitee` 令牌。
 
 #### 设置 `dst_token`
 
 以 `Gitee` 为例，获取令牌后添加到 `GitHub` 中。
 
 1. 通过 `Gitee` **个人设置** 中的 `私人令牌` 生成 `GITEE_TOKEN`，并将令牌内容复制到值区域。
-
-   令牌仅出现一次，请保存它（它可以生成多次）。
+   
+   PS：令牌仅出现一次，请保存它（它可以生成多次）。
 
     ![生成个人访问令牌](./static/secret_key.png)
 
@@ -62,10 +64,17 @@
 
    ![添加令牌](./static/secret_key_1.png)
 
+### `static_list`(建议)
+
+`static_list` 配置后，仅同步静态列表，不会再动态获取需同步列表（黑白名单机制依旧生效），如“repo1,repo2,repo3”。
+
++ 当前的 `hub-mirror-action@v0.09` 会对所有的仓库进行镜像同步，会在另一个 `hub` 中创建 `GitHub` 下克隆的所有仓库。
++ 当前的 `hub-mirror-action@v0.09` 对私有仓库**无法完成**镜像同步，可能会打断同步过程，造成部分仓库未同步。
+
 ## 鸣谢
 
-- [Yikun/hub-mirror-action](https://github.com/Yikun/hub-mirror-action)
-- [ShixiangWang/sync2gitee](https://github.com/ShixiangWang/sync2gitee)
++ [Yikun/hub-mirror-action](https://github.com/Yikun/hub-mirror-action)
++ [ShixiangWang/sync2gitee](https://github.com/ShixiangWang/sync2gitee)
 
 ## 许可证
 

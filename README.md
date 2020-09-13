@@ -8,7 +8,10 @@
 
 PS：当前的模板仓库仅使用了部分参数配置同步指令，`.github/workflows/sync2gitee.yml` 的参数需要自行修改和配置以完成个人的流程使用。
 
+## 目录
+
 - [hub-mirror](#hub-mirror)
+- [目录](#目录)
 - [配置参数](#配置参数)
   - [`src`(需要)](#src需要)
   - [`dst`(需要)](#dst需要)

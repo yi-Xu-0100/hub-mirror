@@ -8,7 +8,10 @@ Template usage repository of [github action-hub-mirror-action](https://github.co
 
 PS: This template repository only uses part of parameters configuring synchronization workflows. The parameters of `.github/workflows/sync2gitee.yml` need to be modified and configured by yourself to complete the personal workflows configuration.
 
+## Table of Contents
+
 - [hub-mirror](#hub-mirror)
+- [Table of Contents](#table-of-contents)
 - [Configuration parameter](#configuration-parameter)
   - [`src`(required)](#srcrequired)
   - [dst(required)](#dstrequired)

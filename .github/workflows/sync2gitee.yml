@@ -20,7 +20,7 @@ jobs:
       id: cache
       with:
         path: ${{ github.workspace }}/hub-mirror-cache
-        key: ${{ runner.os }}-${{ github.repository_owner }}-{{ github.event.repository.name }}-cache
+        key: ${{ runner.os }}-${{ github.repository_owner }}-${{ github.event.repository.name }}-cache
 
     - name: Print the cache status
       if: steps.cache.outputs.cache-hit == 'true'

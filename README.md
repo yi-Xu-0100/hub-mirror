@@ -8,6 +8,19 @@
 
 PS：当前的模板仓库仅使用了部分参数配置同步指令，`.github/workflows/sync2gitee.yml` 的参数需要自行修改和配置以完成个人的流程使用。
 
+- [hub-mirror](#hub-mirror)
+- [配置参数](#配置参数)
+  - [`src`(需要)](#src需要)
+  - [`dst`(需要)](#dst需要)
+  - [`dst_key`(需要)](#dst_key需要)
+    - [设置 `dst_key`](#设置-dst_key)
+  - [`dst_token`(需要)](#dst_token需要)
+    - [设置 `dst_token`](#设置-dst_token)
+  - [`static_list`(建议)](#static_list建议)
+- [单仓库使用](#单仓库使用)
+- [鸣谢](#鸣谢)
+- [许可证](#许可证)
+
 ## 配置参数
 
 ### `src`(需要)
@@ -55,7 +68,7 @@ PS：当前的模板仓库仅使用了部分参数配置同步指令，`.github/
 以 `Gitee` 为例，获取令牌后添加到 `GitHub` 中。
 
 1. 通过 `Gitee` **个人设置** 中的 `私人令牌` 生成 `GITEE_TOKEN`，并将令牌内容复制到值区域。
-   
+
    PS：令牌仅出现一次，请保存它（它可以生成多次）。
 
     ![生成个人访问令牌](./static/secret_key.png)
@@ -66,15 +79,22 @@ PS：当前的模板仓库仅使用了部分参数配置同步指令，`.github/
 
 ### `static_list`(建议)
 
-`static_list` 配置后，仅同步静态列表，不会再动态获取需同步列表（黑白名单机制依旧生效），如“repo1,repo2,repo3”。
+`static_list` 配置后，仅同步静态列表，不会再动态获取需同步列表（黑白名单机制依旧生效），如“repo1,repo2,repo3”。模板仓库中的 `static_list` 使用的 `${{ github.event.repository.name }}` 仅仅指定了当前仓库（即模板仓库）。同时，设置仓库名称时需要注意以下问题：
 
-+ 当前的 `hub-mirror-action@v0.09` 会对所有的仓库进行镜像同步，会在另一个 `hub` 中创建 `GitHub` 下克隆的所有仓库。
-+ 当前的 `hub-mirror-action@v0.09` 对私有仓库**无法完成**镜像同步，可能会打断同步过程，造成部分仓库未同步。
+- 仓库名称注意大小写和符号。
+- 当前的 `hub-mirror-action@v0.09` 会对所有的仓库进行镜像同步，会在另一个 `hub` 中创建 `GitHub` 下克隆的所有仓库。
+- 当前的 `hub-mirror-action@v0.09` 对私有仓库**无法完成**镜像同步，可能会打断同步过程，造成部分仓库未同步。
+
+## 单仓库使用
+
+由于 `static_list` 仅设置了当前仓库。可以不增加参数，而选择将 `.github/workflows/sync2gitee.yml` 放置在任意仓库的**相同路径**下，以实现仅同步含有该文件的仓库的配置。
+
+PS：你同样需要 [配置参数](#配置参数) 。
 
 ## 鸣谢
 
-+ [Yikun/hub-mirror-action](https://github.com/Yikun/hub-mirror-action)
-+ [ShixiangWang/sync2gitee](https://github.com/ShixiangWang/sync2gitee)
+- [Yikun/hub-mirror-action](https://github.com/Yikun/hub-mirror-action)
+- [ShixiangWang/sync2gitee](https://github.com/ShixiangWang/sync2gitee)
 
 ## 许可证
 

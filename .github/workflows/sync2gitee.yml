@@ -20,7 +20,7 @@ jobs:
       id: cache
       with:
         path: ${{ github.workspace }}/hub-mirror-cache
-        key: ${{ runner.os }}-hub-mirror-cache
+        key: ${{ runner.os }}-${{ github.repository_owner }}-{{ github.event.repository.name }}-cache
 
     - name: Print the cache status
       if: steps.cache.outputs.cache-hit == 'true'
@@ -36,7 +36,7 @@ jobs:
         dst_token: ${{ secrets.GITEE_TOKEN }}
         account_type: user
         cache_path: /github/workspace/hub-mirror-cache
-        static_list: 'hub-mirror,soulsign-scripts,test,hugo-theme-whiteink,www.yixuju.cn,soulsign-scripts,Learn-for-coding,Application-Lists'
+        static_list: "${{ github.event.repository.name }}"
         force_update: true
     - name: Print cache path
       run: |

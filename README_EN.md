@@ -8,6 +8,19 @@ Template usage repository of [github action-hub-mirror-action](https://github.co
 
 PS: This template repository only uses part of parameters configuring synchronization workflows. The parameters of `.github/workflows/sync2gitee.yml` need to be modified and configured by yourself to complete the personal workflows configuration.
 
+- [hub-mirror](#hub-mirror)
+- [Configuration parameter](#configuration-parameter)
+  - [`src`(required)](#srcrequired)
+  - [dst(required)](#dstrequired)
+  - [`dst_key`(required)](#dst_keyrequired)
+    - [Set `dst_key`](#set-dst_key)
+  - [`dst_token`(required)](#dst_tokenrequired)
+    - [Set `dst_token`](#set-dst_token)
+  - [`static_list` (recommended)](#static_list-recommended)
+- [Single repository usage](#single-repository-usage)
+- [Thanks](#thanks)
+- [LICENSE](#license)
+
 ## Configuration parameter
 
 ### `src`(required)
@@ -66,7 +79,17 @@ Take `Gitee` as an example, get the token and add it to `GitHub`.
 
 ### `static_list` (recommended)
 
-`static_list`  is repos only mirror, but don't get list from repo api dynamically (the white/black list is still available), like 'repo1,repo2,repo3'.
+`static_list`  is repos only mirror, but don't get list from repo api dynamically (the white/black list is still available), like 'repo1,repo2,repo3'. The `${{ github.event.repository.name }}` used by `static_list` in the template repository only specifies the current repository (ie, the template repository). At the same time, you need to pay attention to the following issues when setting the repository name:
+
+- Pay attention to the case and symbols of the repository name.
+- The current action `hub-mirror-action@v0.09` will synchronize all repositories and create all repositories cloned under `GitHub` in another `hub`.
+- The current action `hub-mirror-action@v0.09` **can not complete** the mirror synchronization for the private repository, it may interrupt the synchronization process and cause some repositories to not be synchronized.
+
+## Single repository usage
+
+Because `static_list` only sets the current repository, you can choose to place `.github/workflows/sync2gitee.yml` in the **same path** of any repository without adding the parameters, to realize the configuration of synchronizing only the repository containing the file.
+
+PS: You also need [Configuration Parameters](#configuration-parameter).
 
 ## Thanks
 

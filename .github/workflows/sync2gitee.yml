@@ -2,7 +2,7 @@ on:
   push:
   schedule:
     # UTC 17:00 -> CST (China) 1:00 see https://datetime360.com/cn/utc-cst-china-time/
-    - cron: '1 * * * *'
+    - cron: '20 02 * * *'
 name: sync2gitee
 jobs:
   run:

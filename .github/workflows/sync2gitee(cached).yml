@@ -1,15 +1,15 @@
-name: sync2gitee
+name: sync2gitee(cached)
 version: 1.0.0
 
 on:
   push:
   schedule:
     # UTC 17:00 -> CST (China) 1:00 see https://datetime360.com/cn/utc-cst-china-time/
-    - cron: '1 17 * * *'
+    - cron: '0 17 * * *'
 
 jobs:
   run:
-    name: Sync GitHub to Gitee
+    name: Sync GitHub to Gitee(Cached)
     runs-on: ubuntu-latest
     steps:
     - name: Checkout source code
@@ -24,6 +24,18 @@ jobs:
         script: |
           return context.repo.repo;
 
+    - name: Cache src repos
+      uses: actions/cache@v2.1.1
+      id: cache
+      with:
+        path: ${{ github.workspace }}/hub-mirror-cache
+        key: ${{ runner.os }}-${{ github.repository_owner }}-${{ steps.info.outputs.result }}-cache
+
+    - name: Print the cache status
+      if: steps.cache.outputs.cache-hit == 'true'
+      run: |
+        echo "Cached successfully."
+
     - name: Mirror the Github repos to Gitee with cache
       uses: Yikun/hub-mirror-action@v0.09
       with:
@@ -31,7 +43,11 @@ jobs:
         dst: gitee/yiXu0100
         dst_key: ${{ secrets.GITEE_PRIVATE_KEY }}
         dst_token: ${{ secrets.GITEE_TOKEN }}
-        static_list: '${{ steps.info.outputs.result }},MY_REPO'
+        static_list: '${{ steps.info.outputs.result }}'
         account_type: user
         force_update: true
         cache_path: /github/workspace/hub-mirror-cache
+
+    - name: Print cache path
+      run: |
+        ls -la ${{ github.workspace }}/hub-mirror-cache

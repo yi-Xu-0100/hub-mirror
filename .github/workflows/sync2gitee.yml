@@ -34,7 +34,7 @@ jobs:
         dst: gitee/yiXu0100
         dst_key: ${{ secrets.GITEE_PRIVATE_KEY }}
         dst_token: ${{ secrets.GITEE_TOKEN }}
-        static_list: '${{ steps.info.outputs.result }},MY_REPO'
+        static_list: '${{ steps.info.outputs.result }}'
         account_type: user
         force_update: true
         cache_path: /github/workspace/hub-mirror-cache

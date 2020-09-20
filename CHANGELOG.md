@@ -20,6 +20,10 @@
 - [x] 🚚 将原来的配置 [cache](./README.md#cache_path可选) 的 [使用示例](/yi-Xu-0100/hub-mirror/blob/v1.0.0/.github/workflows/sync2gitee(cached).yml) 的名称由 `sync2gitee(cached).yml` 修改为 `sync2gitee.cached.yml`
 - [x] 🔧 将 [autoRelease](/yi-Xu-0100/hub-mirror/blob/v1.0.0/.github/workflows/autoRelease.yml) 中的运行任务名称由 `Auto Release` 改为 `Release`
 
+### 🐛 修复
+
+- [x] 🐛 修复 GitHub page 无法渲染 `${{secrets.GITHUB_TOKEN}}` ，更改为 `secrets.GITHUB_TOKEN`
+
 ## [1.0.0] - 2020-09-19
 
 ### ✨ 增加

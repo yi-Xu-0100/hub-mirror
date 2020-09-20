@@ -31,7 +31,7 @@ PS：当前的模板仓库仅使用了部分参数配置同步指令，`.github/
 - [FAQ](#faq)
   - [`Gitee` 无法创建 `XXX` 仓库如何解决](#gitee-无法创建-xxx-仓库如何解决)
   - [`github/cache` 的使用方法](#githubcache-的使用方法)
-  - [`${{secrets.GITHUB_TOKEN}}` 配置方法](#secretsgithub_token-配置方法)
+  - [`secrets.GITHUB_TOKEN` 配置方法](#secretsgithub_token-配置方法)
 - [鸣谢](#鸣谢)
 - [许可证](#许可证)
 
@@ -144,7 +144,7 @@ PS：你同样需要 [配置参数](#配置参数) 。
 - `path` 变量设置的路径的设置与 `hub-mirror-action` 中的参数 `cache_path` 设置的路径相对应。
 - `key` 变量设置的名称与仓库拥有者和仓库名称相关，相关信息已通过流程上下文获取，无需修改和设置。
 
-### `${{secrets.GITHUB_TOKEN}}` 配置方法
+### `secrets.GITHUB_TOKEN` 配置方法
 
 **该参数无需配置，由 `GitHub` 自动创建并获取。**
 

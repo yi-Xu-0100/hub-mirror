@@ -13,6 +13,7 @@
 
 - [ ] 🌐 完成 [README_EN.md](./README_EN.md)
 - [ ] 🌐 完成 [CHANGELOGE_EN.md](./CHANGELOGE_EN.md)
+- [x] 📝 增加 [autoRelease](https://github.com/yi-Xu-0100/hub-mirror/actions?query=workflow%3AautoRelease) 的徽章
 
 ### ♻️ 变化
 

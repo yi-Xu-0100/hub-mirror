@@ -2,8 +2,8 @@
 
 ![sync2gitee](https://github.com/yi-Xu-0100/hub-mirror/workflows/sync2gitee/badge.svg)
 ![sync2gitee(cached)](https://github.com/yi-Xu-0100/hub-mirror/workflows/sync2gitee(cached)/badge.svg)
-![autoRelease](https://github.com/yi-Xu-0100/hub-mirror/workflows/autoRelease/badge.svg)
 ![GitHub last commit](https://img.shields.io/github/last-commit/yi-Xu-0100/hub-mirror)
+![GitHub release (latest by date)](https://img.shields.io/github/v/release/yi-Xu-0100/hub-mirror)
 ![LICENSE](https://img.shields.io/github/license/yi-Xu-0100/hub-mirror)
 
 [简体中文](./README.md) | [English](./README_EN.md)

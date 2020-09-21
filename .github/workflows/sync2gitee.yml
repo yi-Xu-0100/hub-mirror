@@ -37,4 +37,3 @@ jobs:
         static_list: '${{ steps.info.outputs.result }}'
         account_type: user
         force_update: true
-        cache_path: /github/workspace/hub-mirror-cache

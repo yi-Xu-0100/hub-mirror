@@ -1,8 +1,8 @@
 name: sync2gitee(cached)
-# version: 1.0.0
+# version: 1.0.1
 # author: [yiXu](https://github.com/yi-Xu-0100)
 # guide: [yi-Xu-0100/hub-mirror](https://github.com/yi-Xu-0100/hub-mirror)
-# lastmod: 2020-09-19 19:11:06
+# lastmod: 2020-09-21 08:32:25
 
 on:
   push:

@@ -45,6 +45,7 @@ jobs:
           currentVersion: ${{ steps.changelog-reader.outputs.version }}
           latestRelease: ${{ steps.get-latest-release.outputs.result }}
         with:
+          result-encoding: string
           script: |
             const compareVersions = require(`${process.env.GITHUB_WORKSPACE}/node_modules/compare-versions`);
             var currentVersion = `${process.env.currentVersion}`;

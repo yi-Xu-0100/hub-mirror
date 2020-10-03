@@ -1,7 +1,7 @@
 ## hub-mirror
 
 ![sync2gitee](https://github.com/yi-Xu-0100/hub-mirror/workflows/sync2gitee/badge.svg)
-![sync2gitee(cached)](https://github.com/yi-Xu-0100/hub-mirror/workflows/sync2gitee(cached)/badge.svg)
+![sync2gitee(cached)](<https://github.com/yi-Xu-0100/hub-mirror/workflows/sync2gitee(cached)/badge.svg>)
 ![GitHub last commit](https://img.shields.io/github/last-commit/yi-Xu-0100/hub-mirror)
 ![GitHub release (latest by date)](https://img.shields.io/github/v/release/yi-Xu-0100/hub-mirror)
 ![LICENSE](https://img.shields.io/github/license/yi-Xu-0100/hub-mirror)
@@ -58,20 +58,21 @@ PS：当前的模板仓库仅使用了部分参数配置同步指令，`.github/
 1. 安装 `Git` 并启动 `GitBash`
 2. 运行以下命令以生成 `SSH` 密钥对（图片中使用的默认配置，即跳过所有设置）
 
-    ``` sh
-    ssh-keygen -t rsa
-    ```
+   ```sh
+   ssh-keygen -t rsa
+   ```
 
-    ![生成 SSH 密钥对](./static/rsa_gen.png)
+   ![生成 SSH 密钥对](./static/rsa_gen.png)
 
 3. 根据第二步获得的路径，将密钥对分别添加到两个库中（以 `GitHub` 和 `Gitee` 为例）
-    1. 将私钥（ `id_rsa` ）添加到 `GitHub` 存储库。通过 `GitHub` **仓库设置** 中的 `Secrets` 创建一个 `GITEE_PRIVATE_KEY` 变量，然后将私钥内容复制到值区域。
 
-        ![添加私钥](./static/add_secret_key.png)
+   1. 将私钥（ `id_rsa` ）添加到 `GitHub` 存储库。通过 `GitHub` **仓库设置** 中的 `Secrets` 创建一个 `GITEE_PRIVATE_KEY` 变量，然后将私钥内容复制到值区域。
 
-    2. 将公钥（ `id_rsa.pub` ）添加到 `Gitee` 存储库。通过 `Gitee` **个人设置** 中的 `SSH公钥` 创建一个 `hub-mirror` 变量，然后将公钥内容复制到值区域。
+      ![添加私钥](./static/add_secret_key.png)
 
-        ![添加公钥](./static/add_pub_key.png)
+   2. 将公钥（ `id_rsa.pub` ）添加到 `Gitee` 存储库。通过 `Gitee` **个人设置** 中的 `SSH公钥` 创建一个 `hub-mirror` 变量，然后将公钥内容复制到值区域。
+
+      ![添加公钥](./static/add_pub_key.png)
 
 ### `dst_token`(需要)
 
@@ -85,7 +86,7 @@ PS：当前的模板仓库仅使用了部分参数配置同步指令，`.github/
 
    PS：令牌仅出现一次，请保存它（它可以生成多次）。
 
-    ![生成个人访问令牌](./static/secret_key.png)
+   ![生成个人访问令牌](./static/secret_key.png)
 
 2. 将令牌添加到 `GitHub` 存储库，通过 `GitHub` **仓库设置** 中的 `Secrets` 创建一个 `GITEE_TOKEN` 变量，并将私钥内容复制到值区域。
 
@@ -117,7 +118,7 @@ PS：当前的模板仓库仅使用了部分参数配置同步指令，`.github/
 
 `cache_path` 选项需要搭配 [actions/cache](https://github.com/actions/cache) 使用，配置后会对同步的仓库内容进行缓存，缩短仓库同步时间。
 
-- [sync2gitee(cache).yml](./.github/workflows/sync2gitee(cached).yml) 是配置了 `cache_path` 的使用示例。
+- [sync2gitee(cache).yml](<./.github/workflows/sync2gitee(cached).yml>) 是配置了 `cache_path` 的使用示例。
 - [sync2gitee.yml](./.github/workflows/sync2gitee.yml) 是未配置 `cache_path` 的使用示例。
 
 ## 单仓库使用

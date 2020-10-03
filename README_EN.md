@@ -47,20 +47,21 @@ PS: This template repository only uses part of parameters configuring synchroniz
 1. install `Git` and launch `GitBash`
 2. Run the following command to generate an `SSH` key pair (The default configuration used by the picture, that is, skip all settings).
 
-    ``` sh
-    ssh-keygen -t rsa
-    ```
+   ```sh
+   ssh-keygen -t rsa
+   ```
 
-    ![Get SSH key pair](./static/rsa_gen.png)
+   ![Get SSH key pair](./static/rsa_gen.png)
 
 3. According to the path obtained in the second step, add the key pair to the two libraries respectively (take `GitHub` and `Gitee` as examples)
-    1. Add the private key (`id_rsa`) to the `GitHub` repository. Create a `GITEE_PRIVATE_KEY` variable through the `Secrets` in the `GitHub` **repository settings**, and copy the private key content to the value area.
 
-        ![Add the private key](./static/add_secret_key.png)
+   1. Add the private key (`id_rsa`) to the `GitHub` repository. Create a `GITEE_PRIVATE_KEY` variable through the `Secrets` in the `GitHub` **repository settings**, and copy the private key content to the value area.
 
-    2. Add the public key (`id_rsa.pub`) to the `Gitee` repository. Create a `hub-mirror` variable through the `SSH Public Key` in the `Gitee` **personal settings**, and copy the public key content to the value area.
+      ![Add the private key](./static/add_secret_key.png)
 
-        ![Add the public key](./static/add_pub_key.png)
+   2. Add the public key (`id_rsa.pub`) to the `Gitee` repository. Create a `hub-mirror` variable through the `SSH Public Key` in the `Gitee` **personal settings**, and copy the public key content to the value area.
+
+      ![Add the public key](./static/add_pub_key.png)
 
 ### `dst_token`(required)
 
@@ -82,7 +83,7 @@ Take `Gitee` as an example, get the token and add it to `GitHub`.
 
 ### `static_list` (recommended)
 
-`static_list`  is repos only mirror, but don't get list from repo api dynamically (the white/black list is still available), like 'repo1,repo2,repo3'. The `${{ github.event.repository.name }}` used by `static_list` in the template repository only specifies the current repository (ie, the template repository). At the same time, you need to pay attention to the following issues when setting the repository name:
+`static_list` is repos only mirror, but don't get list from repo api dynamically (the white/black list is still available), like 'repo1,repo2,repo3'. The `${{ github.event.repository.name }}` used by `static_list` in the template repository only specifies the current repository (ie, the template repository). At the same time, you need to pay attention to the following issues when setting the repository name:
 
 - Pay attention to the case and symbols of the repository name.
 - The current action `hub-mirror-action@v0.09` will synchronize all repositories and create all repositories cloned under `GitHub` in another `hub`.

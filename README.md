@@ -116,6 +116,8 @@ PS：当前的模板仓库仅使用了部分参数配置同步指令，`.github/
 
 ### `cache_path`(可选)
 
+**注意：如果cache配置不当，依然会造成整个仓库的同步时间过长。见 [`github cache` 的使用方法](#githubcache-的使用方法)**
+
 `cache_path` 选项需要搭配 [actions/cache](https://github.com/actions/cache) 使用，配置后会对同步的仓库内容进行缓存，缩短仓库同步时间。
 
 - [sync2gitee(cache).yml](<./.github/workflows/sync2gitee(cached).yml>) 是配置了 `cache_path` 的使用示例。
@@ -144,6 +146,8 @@ PS：你同样需要 [配置参数](#配置参数) 。
 
 - `path` 变量设置的路径的设置与 `hub-mirror-action` 中的参数 `cache_path` 设置的路径相对应。
 - `key` 变量设置的名称与仓库拥有者和仓库名称相关，相关信息已通过流程上下文获取，无需修改和设置。
+
+**注意：由于当前配置的 key 值固定，造成仓库仅缓存第一次的仓库状态，每次也只是从第一次的状况开始，如果仓库一直有很多变化，在长时间使用的情况下，仍然会慢慢增加同步的时间。以待后面修正 cache 的配置问题。**
 
 ### `secrets.GITHUB_TOKEN` 配置方法
 

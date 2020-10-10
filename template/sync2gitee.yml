@@ -1,18 +1,18 @@
-name: sync2gitee(cached)
-# version: 1.1.0
+name: sync2gitee
+# version: 1.0.1
 # author: [yiXu](https://github.com/yi-Xu-0100)
 # guide: [yi-Xu-0100/hub-mirror](https://github.com/yi-Xu-0100/hub-mirror)
-# lastmod: 2020-10-10 19:18:12
+# lastmod: 2020-09-21 08:32:13
 
 on:
   push:
   schedule:
     # UTC 17:00 -> CST (China) 1:00 see https://datetime360.com/cn/utc-cst-china-time/
-    - cron: '0 17 * * *'
+    - cron: '1 17 * * *'
 
 jobs:
   run:
-    name: Sync GitHub to Gitee(Cached)
+    name: Sync GitHub to Gitee
     runs-on: ubuntu-latest
     steps:
       - name: Checkout source code
@@ -27,21 +27,7 @@ jobs:
           script: |
             return context.repo.repo;
 
-      - name: Get Date
-        id: get-date
-        run: |
-          echo "::set-output name=date::$(/bin/date -u "+%Y%m%d-%H%M%S")"
-        shell: bash
-
-      - name: Cache src repos
-        uses: actions/cache@v2.1.1
-        id: cache
-        with:
-          path: ${{ github.workspace }}/hub-mirror-cache
-          key: ${{ runner.os }}-${{ github.repository_owner }}-${{ steps.info.outputs.result }}-cache-${{ steps.get-date.outputs.date }}
-          restore-keys: ${{ runner.os }}-${{ github.repository_owner }}-${{ steps.info.outputs.result }}-cache
-
-      - name: Mirror the GitHub repos to Gitee with cache
+      - name: Mirror the GitHub repos to Gitee
         uses: Yikun/hub-mirror-action@v0.09
         with:
           src: github/yi-Xu-0100
@@ -49,10 +35,5 @@ jobs:
           dst_key: ${{ secrets.GITEE_PRIVATE_KEY }}
           dst_token: ${{ secrets.GITEE_TOKEN }}
           static_list: '${{ steps.info.outputs.result }}'
-          cache_path: /github/workspace/hub-mirror-cache
           account_type: user
           force_update: true
-
-      - name: Print cache path
-        run: |
-          ls -la ${{ github.workspace }}/hub-mirror-cache

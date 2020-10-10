@@ -1,8 +1,8 @@
 name: sync2gitee(cached)
-# version: 1.1.0
+# version: 1.1.1
 # author: [yiXu](https://github.com/yi-Xu-0100)
 # guide: [yi-Xu-0100/hub-mirror](https://github.com/yi-Xu-0100/hub-mirror)
-# lastmod: 2020-10-10 19:18:12
+# lastmod: 2020-10-10 19:23:05
 
 on:
   push:
@@ -30,7 +30,7 @@ jobs:
       - name: Get Date
         id: get-date
         run: |
-          echo "::set-output name=date::$(/bin/date -u "+%Y%m%d-%H%M%S")"
+          echo "::set-output name=date::$(/bin/date -u "+%Y%m%d%H%M%S")"
         shell: bash
 
       - name: Cache src repos

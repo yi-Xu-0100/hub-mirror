@@ -1,8 +1,8 @@
 name: sync2gitee(cached)
-# version: 1.1.1
+# version: 1.1.2
 # author: [yiXu](https://github.com/yi-Xu-0100)
 # guide: [yi-Xu-0100/hub-mirror](https://github.com/yi-Xu-0100/hub-mirror)
-# lastmod: 2020-10-10 19:23:05
+# lastmod: 2020-10-10 19:48:08
 
 on:
   push:
@@ -39,7 +39,7 @@ jobs:
         with:
           path: ${{ github.workspace }}/hub-mirror-cache
           key: ${{ runner.os }}-${{ github.repository_owner }}-${{ steps.info.outputs.result }}-cache-${{ steps.get-date.outputs.date }}
-          restore-keys: ${{ runner.os }}-${{ github.repository_owner }}-${{ steps.info.outputs.result }}-cache
+          restore-keys: ${{ runner.os }}-${{ github.repository_owner }}-${{ steps.info.outputs.result }}-cache-
 
       - name: Mirror the GitHub repos to Gitee with cache
         uses: Yikun/hub-mirror-action@v0.09

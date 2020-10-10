@@ -1,16 +1,16 @@
 ## hub-mirror
 
-[![sync2gitee](https://github.com/yi-Xu-0100/hub-mirror/workflows/sync2gitee/badge.svg)](./.github/workflows/sync2gitee.yml)
-[![sync2gitee(cached)](<https://github.com/yi-Xu-0100/hub-mirror/workflows/sync2gitee(cached)/badge.svg>)](./.github/workflows/sync2gitee.cached.yml)
+[![sync2gitee](https://github.com/yi-Xu-0100/hub-mirror/workflows/sync2gitee/badge.svg)](./template/sync2gitee.yml)
+[![sync2gitee(cached)](<https://github.com/yi-Xu-0100/hub-mirror/workflows/sync2gitee(cached)/badge.svg>)](./template/sync2gitee.cached.yml)
 [![GitHub last commit](https://img.shields.io/github/last-commit/yi-Xu-0100/hub-mirror)](./)
 [![GitHub release (latest by date)](https://img.shields.io/github/v/release/yi-Xu-0100/hub-mirror)](https://github.com/yi-Xu-0100/hub-mirror/releases)
 [![LICENSE](https://img.shields.io/github/license/yi-Xu-0100/hub-mirror)](./LICENSE)
 
 [简体中文](./README.md) | [English](./README_EN.md)
 
-使用 [github action - hub-mirror-action](https://github.com/Yikun/hub-mirror-action) 的模板仓库，可以管理当前 `GitHub` 与其他的 `hub` 的存储库的镜像同步。
+使用 [github action - hub-mirror-action](https://github.com/Yikun/hub-mirror-action) 的模板仓库，可以管理当前 `GitHub` 与其他的 `hub` 的存储库 (当前仅包含 `gitee` ) 的镜像同步。
 
-PS：当前的模板仓库仅使用了部分参数配置同步指令，`.github/workflows/sync2gitee.yml` 的参数需要自行修改和配置以完成个人的流程使用。
+**PS：当前的模板仓库仅使用了部分参数配置同步指令，[template](./template) 中的示例的参数仍然需要自行修改和配置以适配个人的流程使用。**
 
 ## 目录
 
@@ -116,7 +116,7 @@ PS：当前的模板仓库仅使用了部分参数配置同步指令，`.github/
 
 ### `cache_path`(可选)
 
-**注意：如果cache配置不当，依然会造成整个仓库的同步时间过长。见 [`github cache` 的使用方法](#githubcache-的使用方法)**
+**注意：如果 cache 配置不当，依然会造成整个仓库的同步时间过长。见 [`github cache` 的使用方法](#githubcache-的使用方法)**
 
 `cache_path` 选项需要搭配 [actions/cache](https://github.com/actions/cache) 使用，配置后会对同步的仓库内容进行缓存，缩短仓库同步时间。
 
@@ -142,12 +142,42 @@ PS：你同样需要 [配置参数](#配置参数) 。
 
 ### `github/cache` 的使用方法
 
-仓库中的同步流程使用了 `github/cache` 这一个动作完成仓库的缓存。对于该仓库的设置已经完成，不需要修改。
+仓库中的同步流程使用了 `github/cache` 这一个动作完成仓库的缓存。对于同步仓库的设置已经完成，**不需要修改**。为了完成 cache 的参数配置，同时需要构建 key 所需要的参数，所以使用了**三个步骤**去完成 cache 的配置，文件见 [`template/sync2gitee.cache.yaml`](./template/sync2gitee.cached.yml)。
 
-- `path` 变量设置的路径的设置与 `hub-mirror-action` 中的参数 `cache_path` 设置的路径相对应。
-- `key` 变量设置的名称与仓库拥有者和仓库名称相关，相关信息已通过流程上下文获取，无需修改和设置。
+```yaml
+- name: Get current repository name
+  id: info
+  uses: actions/github-script@v3.0.0
+  with:
+    github-token: ${{secrets.GITHUB_TOKEN}}
+    result-encoding: string
+    script: |
+      return context.repo.repo;
 
-**注意：由于当前配置的 key 值固定，造成仓库仅缓存第一次的仓库状态，每次也只是从第一次的状况开始，如果仓库一直有很多变化，在长时间使用的情况下，仍然会慢慢增加同步的时间。以待后面修正 cache 的配置问题。**
+- name: Get Date
+  id: get-date
+  run: |
+    echo "::set-output name=date::$(/bin/date -u "+%Y%m%d%H%M%S")"
+  shell: bash
+
+- name: Cache src repos
+  uses: actions/cache@v2.1.1
+  id: cache
+  with:
+    path: ${{ github.workspace }}/hub-mirror-cache
+    key: ${{ runner.os }}-${{ github.repository_owner }}-${{ steps.info.outputs.result }}-cache-${{ steps.get-date.outputs.date }}
+    restore-keys: ${{ runner.os }}-${{ github.repository_owner }}-${{ steps.info.outputs.result }}-cache-
+```
+
+说明：
+
+- `id` 为 `info` 的步骤使用了 `GitHub/github-script` 获取仓库操作者和仓库名（同时用于了 [`static_list` 参数配置](#static_list建议)）。
+- `id` 为 `get-date` 的步骤使用了 bash 命令设置了当前时间为环境变量，最后通过 `${{ steps.get-date.outputs.date }}` 被设置为 `key` 的变量。
+- `path` 变量设置的路径的设置与 `hub-mirror-action` 中的参数 `cache_path` 设置的路径相对应（建议不修改，当前配置的目录为参数配置的默认值）。
+- `key` 变量设置的名称与运行环境、仓库拥有者和仓库名称相关，最后以时间为关键词确定特异性（相关信息已通过流程上下文获取，建议不修改），保证每次会对内容重新缓存。
+- `restore-keys` 仅匹配前面前置变量，这样保证每次获取最近一次的缓存结果。
+- `key` 在 `7` 天未触发或者缓存结果存储大小大于 `5G` 的情况下，会删除旧的缓存文件。
+- 详细 `cache` 的配置说明见 [`cache` 仓库文档](https://github.com/actions/cache)。
 
 ### `secrets.GITHUB_TOKEN` 配置方法
 

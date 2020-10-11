@@ -1,4 +1,4 @@
-## hub-mirror
+## Sync GitHub to other hub
 
 [![sync2gitee](https://github.com/yi-Xu-0100/hub-mirror/workflows/sync2gitee/badge.svg)](./template/sync2gitee.yml)
 [![sync2gitee(cached)](<https://github.com/yi-Xu-0100/hub-mirror/workflows/sync2gitee(cached)/badge.svg>)](./template/sync2gitee.cached.yml)
@@ -10,11 +10,11 @@
 
 使用 [github action - hub-mirror-action](https://github.com/Yikun/hub-mirror-action) 的模板仓库，可以管理当前 `GitHub` 与其他的 `hub` 的存储库 (当前仅包含 `gitee` ) 的镜像同步。
 
-**PS：当前的模板仓库仅使用了部分参数配置同步指令，[template](./template) 中的示例的参数仍然需要自行修改和配置以适配个人的流程使用。**
+**PS：当前的模板仓库仅使用了部分参数配置同步指令，[`template`](./template) 中的示例的参数仍然需要自行修改和配置以适配个人的流程使用。**
 
 ## 目录
 
-- [hub-mirror](#hub-mirror)
+- [Sync GitHub to other hub](#sync-github-to-other-hub)
 - [目录](#目录)
 - [配置参数](#配置参数)
   - [`src`(需要)](#src需要)
@@ -116,16 +116,16 @@
 
 ### `cache_path`(可选)
 
-**注意：如果 cache 配置不当，依然会造成整个仓库的同步时间过长。见 [`github cache` 的使用方法](#githubcache-的使用方法)**
+**注意：如果 `cache` 配置不当，依然会造成整个仓库的同步时间过长。详细配置见 [`github cache` 的使用方法](#githubcache-的使用方法)** 。
 
-`cache_path` 选项需要搭配 [actions/cache](https://github.com/actions/cache) 使用，配置后会对同步的仓库内容进行缓存，缩短仓库同步时间。
+`cache_path` 选项需要搭配 [`actions/cache`](https://github.com/actions/cache) 使用，配置后会对同步的仓库内容进行缓存，缩短仓库同步时间。
 
-- [sync2gitee(cache).yml](<./.github/workflows/sync2gitee(cached).yml>) 是配置了 `cache_path` 的使用示例。
-- [sync2gitee.yml](./.github/workflows/sync2gitee.yml) 是未配置 `cache_path` 的使用示例。
+- [`sync2gitee(cache).yml`](<./.github/workflows/sync2gitee(cached).yml>) 是配置了 `cache_path` 的使用示例。
+- [`sync2gitee.yml`](./.github/workflows/sync2gitee.yml) 是未配置 `cache_path` 的使用示例。
 
 ## 单仓库使用
 
-由于 `static_list` 仅设置了当前仓库。可以不增加参数，而选择将 [.github/workflows/使用示例.yml](./.github/workflows/) 放置在任意仓库的**相同路径**下，以实现仅同步含有该文件的仓库的配置。
+由于 `static_list` 仅设置了当前仓库。可以不增加参数，而选择将 [`template`](./template) 文件夹下的示例脚本放置在任意仓库的 `.github/workflows` 下，以实现仅同步含有该文件的仓库的配置。
 
 PS：你同样需要 [配置参数](#配置参数) 。
 
@@ -142,7 +142,7 @@ PS：你同样需要 [配置参数](#配置参数) 。
 
 ### `github/cache` 的使用方法
 
-仓库中的同步流程使用了 `github/cache` 这一个动作完成仓库的缓存。对于同步仓库的设置已经完成，**不需要修改**。为了完成 cache 的参数配置，同时需要构建 key 所需要的参数，所以使用了**三个步骤**去完成 cache 的配置，文件见 [`template/sync2gitee.cache.yaml`](./template/sync2gitee.cached.yml)。
+仓库中的同步流程使用了 `github/cache` 这一个动作完成仓库的缓存。对于同步仓库的设置已经完成，**不需要修改**。为了完成 cache 的参数配置，同时需要构建 `key` 所需要的参数，所以使用了**三个步骤**去完成 `cache` 的配置，文件见 [`template/sync2gitee.cache.yaml`](./template/sync2gitee.cached.yml)。
 
 ```yaml
 - name: Get current repository name
@@ -152,32 +152,26 @@ PS：你同样需要 [配置参数](#配置参数) 。
     github-token: ${{secrets.GITHUB_TOKEN}}
     result-encoding: string
     script: |
+      core.setOutput('date', new Date(Date.now()).toISOString().replaceAll(/[^0-9]/g, ""))
       return context.repo.repo;
-
-- name: Get Date
-  id: get-date
-  run: |
-    echo "::set-output name=date::$(/bin/date -u "+%Y%m%d%H%M%S")"
-  shell: bash
 
 - name: Cache src repos
   uses: actions/cache@v2.1.1
   id: cache
   with:
     path: ${{ github.workspace }}/hub-mirror-cache
-    key: ${{ runner.os }}-${{ github.repository_owner }}-${{ steps.info.outputs.result }}-cache-${{ steps.get-date.outputs.date }}
+    key: ${{ runner.os }}-${{ github.repository_owner }}-${{ steps.info.outputs.result }}-cache-${{ steps.info.outputs.date }}
     restore-keys: ${{ runner.os }}-${{ github.repository_owner }}-${{ steps.info.outputs.result }}-cache-
 ```
 
 说明：
 
-- `id` 为 `info` 的步骤使用了 `GitHub/github-script` 获取仓库操作者和仓库名（同时用于了 [`static_list` 参数配置](#static_list建议)）。
-- `id` 为 `get-date` 的步骤使用了 bash 命令设置了当前时间为环境变量，最后通过 `${{ steps.get-date.outputs.date }}` 被设置为 `key` 的变量。
+- `id` 为 `info` 的步骤使用了 `GitHub/github-script` 获取仓库名称（同时用于了 [`static_list` 参数配置](#static_list建议)）和触发时间戳（`ISO` 格式并仅保留数字）。
 - `path` 变量设置的路径的设置与 `hub-mirror-action` 中的参数 `cache_path` 设置的路径相对应（建议不修改，当前配置的目录为参数配置的默认值）。
-- `key` 变量设置的名称与运行环境、仓库拥有者和仓库名称相关，最后以时间为关键词确定特异性（相关信息已通过流程上下文获取，建议不修改），保证每次会对内容重新缓存。
-- `restore-keys` 仅匹配前面前置变量，这样保证每次获取最近一次的缓存结果。
+- `key` 变量设置的名称与运行环境、仓库拥有者和仓库名称相关，最后以触发时间戳确定特异性（相关信息已通过流程步骤获取，建议不修改），保证每次会对内容重新缓存。
+- `restore-keys` 仅匹配前置关键词，这样保证每次获取最近一次的缓存结果。
 - `key` 在 `7` 天未触发或者缓存结果存储大小大于 `5G` 的情况下，会删除旧的缓存文件。
-- 详细 `cache` 的配置说明见 [`cache` 仓库文档](https://github.com/actions/cache)。
+- 详细 `cache` 的配置说明见 [`cache` 仓库文档](https://github.com/actions/cache) 。
 
 ### `secrets.GITHUB_TOKEN` 配置方法
 

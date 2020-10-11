@@ -1,9 +1,9 @@
 name: sync2gitee(cached)
-# version: 1.1.3
+# version: 1.2.0
 # author: [yiXu](https://github.com/yi-Xu-0100)
 # guide: [yi-Xu-0100/hub-mirror](https://github.com/yi-Xu-0100/hub-mirror)
 # template: [sync2gitee.cached.yml](https://github.com/yi-Xu-0100/hub-mirror/blob/main/template/sync2gitee.cached.yml)
-# lastmod: 2020-10-10 19:56:13
+# lastmod: 2020-10-11 13:48:58
 
 on:
   push:
@@ -19,27 +19,22 @@ jobs:
       - name: Checkout source code
         uses: actions/checkout@v2.3.3
 
-      - name: Get current repository name
+      - name: Get repo and time
         id: info
         uses: actions/github-script@v3.0.0
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
           result-encoding: string
           script: |
+            core.setOutput('time', new Date(Date.now()).toISOString().replaceAll(/[^0-9]/g, ""));
             return context.repo.repo;
-
-      - name: Get Date
-        id: get-date
-        run: |
-          echo "::set-output name=date::$(/bin/date -u "+%Y%m%d%H%M%S")"
-        shell: bash
 
       - name: Cache src repos
         uses: actions/cache@v2.1.1
         id: cache
         with:
           path: ${{ github.workspace }}/hub-mirror-cache
-          key: ${{ runner.os }}-${{ github.repository_owner }}-${{ steps.info.outputs.result }}-cache-${{ steps.get-date.outputs.date }}
+          key: ${{ runner.os }}-${{ github.repository_owner }}-${{ steps.info.outputs.result }}-cache-${{ steps.info.outputs.time }}
           restore-keys: ${{ runner.os }}-${{ github.repository_owner }}-${{ steps.info.outputs.result }}-cache-
 
       - name: Mirror the GitHub repos to Gitee with cache

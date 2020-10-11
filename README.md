@@ -8,7 +8,7 @@
 
 [简体中文](./README.md) | [English](./README_EN.md)
 
-使用 [github action - hub-mirror-action](https://github.com/Yikun/hub-mirror-action) 的模板仓库，可以管理当前 `GitHub` 与其他的 `hub` 的存储库 (当前仅包含 `gitee` ) 的镜像同步。
+使用 [GitHub action - hub-mirror-action](https://github.com/Yikun/hub-mirror-action) 的模板仓库，可以管理当前 `GitHub` 与其他的 `hub` 的存储库 (当前仅包含 `Gitee` ) 的镜像同步。
 
 **PS：当前的模板仓库仅使用了部分参数配置同步指令，[`template`](./template) 中的示例的参数仍然需要自行修改和配置以适配个人的流程使用。**
 
@@ -30,7 +30,7 @@
 - [单仓库使用](#单仓库使用)
 - [FAQ](#faq)
   - [`Gitee` 无法创建 `XXX` 仓库如何解决](#gitee-无法创建-xxx-仓库如何解决)
-  - [`github/cache` 的使用方法](#githubcache-的使用方法)
+  - [`actions/cache` 的使用方法](#actionscache-的使用方法)
   - [`secrets.GITHUB_TOKEN` 配置方法](#secretsgithub_token-配置方法)
 - [鸣谢](#鸣谢)
 - [许可证](#许可证)
@@ -94,7 +94,7 @@
 
 ### `static_list`(建议)
 
-`static_list` 配置后，仅同步静态列表，不会再动态获取需同步列表（黑白名单机制依旧生效），如: `'repo1,repo2,repo3'` 。模板仓库中的 `static_list` 使用的变量由 [actions/github-script](https://github.com/actions/github-script) 输出结果设置，即当前仓库（即模板仓库），如需增加或修改，使用逗号隔开，如: `'${{ steps.info.outputs.result }},MY_REPO'` 。同时，设置仓库名称时需要注意以下问题：
+`static_list` 配置后，仅同步静态列表，不会再动态获取需同步列表（黑白名单机制依旧生效），如: `'repo1,repo2,repo3'` 。模板仓库中的 `static_list` 使用的变量由 [`actions/github-script`](https://github.com/actions/github-script) 输出结果设置，即当前仓库（即模板仓库），如需增加或修改，使用逗号隔开，如: `'${{ steps.info.outputs.result }},MY_REPO'` 。同时，设置仓库名称时需要注意以下问题：
 
 - 仓库名称注意大小写和符号。
 - 当前的 `hub-mirror-action@v0.09` 会对克隆仓库进行镜像同步，会在另一个 `hub` 中创建 `GitHub` 下克隆的仓库（`Gitee` 中无法显示克隆关系）。
@@ -112,16 +112,16 @@
 `force_update` 配置是否强制同步，此选项用于 `GitHub` 与 `Gitee` 仓库内容冲突时。
 
 - 如果配置为 `true` ，会将 `GitHub` 仓库的内容强制推送到 `Gitee` 中。
-- 如果配置为 `false` ，会不将 `GitHub` 仓库的内容强制推送到 `Gitee` 中。
+- 如果配置为 `false` ，不会将 `GitHub` 仓库的内容强制推送到 `Gitee` 中。
 
 ### `cache_path`(可选)
 
-**注意：如果 `cache` 配置不当，依然会造成整个仓库的同步时间过长。详细配置见 [`github cache` 的使用方法](#githubcache-的使用方法)** 。
+**注意：如果 `cache` 配置不当，依然会造成整个仓库的同步时间过长。详细配置见 [`actions/cache` 的使用方法](#actionscache-的使用方法)** 。
 
 `cache_path` 选项需要搭配 [`actions/cache`](https://github.com/actions/cache) 使用，配置后会对同步的仓库内容进行缓存，缩短仓库同步时间。
 
-- [`sync2gitee(cache).yml`](<./.github/workflows/sync2gitee(cached).yml>) 是配置了 `cache_path` 的使用示例。
-- [`sync2gitee.yml`](./.github/workflows/sync2gitee.yml) 是未配置 `cache_path` 的使用示例。
+- [`sync2gitee(cache).yml`](./template/sync2gitee.cached.yml) 是配置了 `cache_path` 的使用示例。
+- [`sync2gitee.yml`](./template/sync2gitee.yml) 是未配置 `cache_path` 的使用示例。
 
 ## 单仓库使用
 
@@ -138,11 +138,11 @@ PS：你同样需要 [配置参数](#配置参数) 。
 解决方案：
 
 1. 可以使用 `Gitee` 提供的服务直接从 `GitHub` 导入仓库，参考 [Gitee 帮助手册](https://gitee.com/help/articles/4261) ，此服务同样要求：只允许字母、数字或者下划线( `_` )、中划线( `-` )、英文句号( `.` )，**必须以字母或数字开头**。
-2. 如果仓库名称以特殊符号开头，则可以使用 [重命名仓库](https://docs.github.com/cn/github/administering-a-repository/renaming-a-repository)或者 [删除仓库](https://docs.github.com/cn/github/administering-a-repository/deleting-a-repository) 并重新 [创建仓库](https://docs.github.com/cn/github/creating-cloning-and-archiving-repositories/creating-a-repository-on-github) 的方式完成仓库改名。
+2. 如果仓库名称以特殊符号开头，则可以使用 [重命名仓库](https://docs.github.com/cn/free-pro-team@latest/github/administering-a-repository/renaming-a-repository) 或者 [删除仓库](https://docs.github.com/cn/free-pro-team@latest/github/administering-a-repository/deleting-a-repository) 并[创建仓库](https://docs.github.com/cn/free-pro-team@latest/github/creating-cloning-and-archiving-repositories/creating-a-repository-on-github) 的方式完成仓库改名。
 
-### `github/cache` 的使用方法
+### `actions/cache` 的使用方法
 
-仓库中的同步流程使用了 `github/cache` 这一个动作完成仓库的缓存。对于同步仓库的设置已经完成，**不需要修改**。为了完成 cache 的参数配置，同时需要构建 `key` 所需要的参数，所以使用了**三个步骤**去完成 `cache` 的配置，文件见 [`template/sync2gitee.cache.yaml`](./template/sync2gitee.cached.yml)。
+仓库中的同步流程使用了 `actions/cache` 这一个动作完成仓库的缓存。模板中对于同步仓库的设置已经完成，**不需要修改**。为了完成 cache 的参数配置，同时需要构建 `key` 所需要的参数，所以使用了**三个步骤**去完成 `cache` 的配置，文件见 [`template/sync2gitee.cache.yaml`](./template/sync2gitee.cached.yml)。
 
 ```yaml
 - name: Get current repository name
@@ -152,7 +152,7 @@ PS：你同样需要 [配置参数](#配置参数) 。
     github-token: ${{secrets.GITHUB_TOKEN}}
     result-encoding: string
     script: |
-      core.setOutput('date', new Date(Date.now()).toISOString().replaceAll(/[^0-9]/g, ""))
+      core.setOutput('date', new Date(Date.now()).toISOString().replace(/[^0-9]/g, ""))
       return context.repo.repo;
 
 - name: Cache src repos
@@ -166,9 +166,9 @@ PS：你同样需要 [配置参数](#配置参数) 。
 
 说明：
 
-- `id` 为 `info` 的步骤使用了 `GitHub/github-script` 获取仓库名称（同时用于了 [`static_list` 参数配置](#static_list建议)）和触发时间戳（`ISO` 格式并仅保留数字）。
+- `id` 为 `info` 的步骤使用了 `actions/github-script` 获取仓库名称（同时用于了 [`static_list` 参数配置](#static_list建议)）和触发时间戳（`ISO` 格式并仅保留数字）。
 - `path` 变量设置的路径的设置与 `hub-mirror-action` 中的参数 `cache_path` 设置的路径相对应（建议不修改，当前配置的目录为参数配置的默认值）。
-- `key` 变量设置的名称与运行环境、仓库拥有者和仓库名称相关，最后以触发时间戳确定特异性（相关信息已通过流程步骤获取，建议不修改），保证每次会对内容重新缓存。
+- `key` 变量的设置与运行环境、仓库拥有者和仓库名称相关，最后以触发时间戳确定特异性（相关信息已通过流程步骤获取，建议不修改），保证每次会对内容重新缓存。
 - `restore-keys` 仅匹配前置关键词，这样保证每次获取最近一次的缓存结果。
 - `key` 在 `7` 天未触发或者缓存结果存储大小大于 `5G` 的情况下，会删除旧的缓存文件。
 - 详细 `cache` 的配置说明见 [`cache` 仓库文档](https://github.com/actions/cache) 。
@@ -177,7 +177,7 @@ PS：你同样需要 [配置参数](#配置参数) 。
 
 **该参数无需配置，由 `GitHub` 自动创建并获取。**
 
-参考见：[工作流中的身份验证](https://docs.github.com/cn/actions/reference/authentication-in-a-workflow)
+参考见：[工作流中的身份验证](https://docs.github.com/cn/free-pro-team@latest/actions/reference/authentication-in-a-workflow)
 
 ## 鸣谢
 

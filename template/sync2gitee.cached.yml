@@ -1,9 +1,9 @@
 name: sync2gitee(cached)
-# version: 1.2.0
+# version: 1.2.1
 # author: [yiXu](https://github.com/yi-Xu-0100)
 # guide: [yi-Xu-0100/hub-mirror](https://github.com/yi-Xu-0100/hub-mirror)
 # template: [sync2gitee.cached.yml](https://github.com/yi-Xu-0100/hub-mirror/blob/main/template/sync2gitee.cached.yml)
-# lastmod: 2020-10-11 13:48:58
+# lastmod: 2020-10-11 13:59:24
 
 on:
   push:
@@ -26,7 +26,7 @@ jobs:
           github-token: ${{secrets.GITHUB_TOKEN}}
           result-encoding: string
           script: |
-            core.setOutput('time', new Date(Date.now()).toISOString().replaceAll(/[^0-9]/g, ""));
+            core.setOutput('time', new Date(Date.now()).toISOString().replace(/[^0-9]/g, ""));
             return context.repo.repo;
 
       - name: Cache src repos

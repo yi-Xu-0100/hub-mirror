@@ -120,7 +120,7 @@ Take `Gitee` as an example, get the token and add it to `GitHub`.
 
 The `cache_path` option needs to be used with [`actions/cache`](https://github.com/actions/cache), which will cache the synchronized repository contents and shorten the synchronization time.
 
-- [`sync2gitee.cache.yml`](./.github/workflows/sync2gitee(cached).yml) is an example of using `cache_path` configured.
+- [`sync2gitee.cache.yml`](./template/sync2gitee.cached.yml) is an example of using `cache_path` configured.
 - [`sync2gitee.yml`](./template/sync2gitee.yml) is a using case where `cache_path` is not configured.
 
 ## Single repository usage

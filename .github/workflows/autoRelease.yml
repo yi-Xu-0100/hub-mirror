@@ -72,7 +72,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./.github/workflows/sync2gitee.yml
+          asset_path: ./template/sync2gitee.yml
           asset_name: sync2gitee.yml
           asset_content_type: text/yaml
 
@@ -83,6 +83,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./.github/workflows/sync2gitee(cached).yml
-          asset_name: sync2gitee(cached).yml
+          asset_path: ./template/sync2gitee.cached.yml
+          asset_name: sync2gitee.cached.yml
           asset_content_type: text/yaml

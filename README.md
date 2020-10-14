@@ -137,8 +137,9 @@ PS：你同样需要 [配置参数](#配置参数) 。
 
 解决方案：
 
-1. 可以使用 `Gitee` 提供的服务直接从 `GitHub` 导入仓库，参考 [Gitee 帮助手册](https://gitee.com/help/articles/4261) ，此服务同样要求：只允许字母、数字或者下划线( `_` )、中划线( `-` )、英文句号( `.` )，**必须以字母或数字开头**。
-2. 如果仓库名称以特殊符号开头，则可以使用 [重命名仓库](https://docs.github.com/cn/free-pro-team@latest/github/administering-a-repository/renaming-a-repository) 或者 [删除仓库](https://docs.github.com/cn/free-pro-team@latest/github/administering-a-repository/deleting-a-repository) 并[创建仓库](https://docs.github.com/cn/free-pro-team@latest/github/creating-cloning-and-archiving-repositories/creating-a-repository-on-github) 的方式完成仓库改名。
+1. ~~可以使用 `Gitee` 提供的服务直接从 `GitHub` 导入仓库，参考 [Gitee 帮助手册](https://gitee.com/help/articles/4261) ，此服务同样要求：只允许字母、数字或者下划线( `_` )、中划线( `-` )、英文句号( `.` )，**必须以字母或数字开头**。~~
+2. 方案 1 由于官方更改规则，现已失效，导入的规则和创建规则一致，官方文档应该会稍后完成更新【2020-10-14】。
+3. 如果仓库名称以**字母或特殊符号**开头，可以使用 [重命名仓库](https://docs.github.com/cn/free-pro-team@latest/github/administering-a-repository/renaming-a-repository) 或者 [删除仓库](https://docs.github.com/cn/free-pro-team@latest/github/administering-a-repository/deleting-a-repository) 并[创建仓库](https://docs.github.com/cn/free-pro-team@latest/github/creating-cloning-and-archiving-repositories/creating-a-repository-on-github) 的方式完成仓库改名。
 
 ### `actions/cache` 的使用方法
 

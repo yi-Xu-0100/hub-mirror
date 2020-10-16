@@ -1,9 +1,9 @@
 name: sync2gitee(list)
-# version: 1.0.0
+# version: 1.0.1
 # author: [yiXu](https://github.com/yi-Xu-0100)
 # guide: [yi-Xu-0100/hub-mirror](https://github.com/yi-Xu-0100/hub-mirror)
 # template: [sync2gitee.cached.yml](https://github.com/yi-Xu-0100/hub-mirror/blob/main/template/sync2gitee.cached.yml)
-# lastmod: 2020-10-14 18:36:15
+# lastmod: 2020-10-16 08:55:46
 
 on:
   workflow_dispatch:
@@ -28,7 +28,7 @@ jobs:
           script: |
             core.setOutput('time', new Date(Date.now()).toISOString().replace(/[^0-9]/g, ""));
             return `${context.repo.owner}-${context.repo.repo}`;
-      
+
       - name: Generate repo list
         id: repo
         uses: yi-Xu-0100/repo-list-generator@v0.0.2
@@ -51,12 +51,11 @@ jobs:
           dst: gitee/yiXu0100
           dst_key: ${{ secrets.GITEE_PRIVATE_KEY }}
           dst_token: ${{ secrets.GITEE_TOKEN }}
-          black_list: 'empty-repo'
+          black_list: 'empty-repo,MyWiki'
           static_list: '${{ steps.repo.outputs.repoList }}'
           cache_path: /github/workspace/hub-mirror-cache
           account_type: user
           force_update: true
-          debug: true
 
       - name: Print cache path
         run: |

@@ -2,6 +2,7 @@
 
 [![sync2gitee](https://github.com/yi-Xu-0100/hub-mirror/workflows/sync2gitee/badge.svg)](./template/sync2gitee.yml)
 [![sync2gitee(cached)](<https://github.com/yi-Xu-0100/hub-mirror/workflows/sync2gitee(cached)/badge.svg>)](./template/sync2gitee.cached.yml)
+[![sync2gitee(list)](<https://github.com/yi-Xu-0100/hub-mirror/workflows/sync2gitee(list)/badge.svg>)](./template/sync2gitee.list.yml)
 [![GitHub last commit](https://img.shields.io/github/last-commit/yi-Xu-0100/hub-mirror)](./)
 [![GitHub release (latest by date)](https://img.shields.io/github/v/release/yi-Xu-0100/hub-mirror)](https://github.com/yi-Xu-0100/hub-mirror/releases)
 [![LICENSE](https://img.shields.io/github/license/yi-Xu-0100/hub-mirror)](./LICENSE)

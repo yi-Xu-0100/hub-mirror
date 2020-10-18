@@ -21,18 +21,15 @@
   - [`src`(需要)](#src需要)
   - [`dst`(需要)](#dst需要)
   - [`dst_key`(需要)](#dst_key需要)
-    - [设置 `dst_key`](#设置-dst_key)
   - [`dst_token`(需要)](#dst_token需要)
-    - [设置 `dst_token`](#设置-dst_token)
   - [`static_list`(建议)](#static_list建议)
   - [`account_type`(建议)](#account_type建议)
   - [`force_update`(建议)](#force_update建议)
   - [`cache_path`(可选)](#cache_path可选)
-- [单仓库使用](#单仓库使用)
 - [FAQ](#faq)
+  - [如何挑选模板](#如何挑选模板)
   - [`Gitee` 无法创建 `XXX` 仓库如何解决](#gitee-无法创建-xxx-仓库如何解决)
   - [`actions/cache` 的使用方法](#actionscache-的使用方法)
-  - [`secrets.GITHUB_TOKEN` 配置方法](#secretsgithub_token-配置方法)
 - [鸣谢](#鸣谢)
 - [许可证](#许可证)
 
@@ -95,15 +92,20 @@
 
 ### `static_list`(建议)
 
-`static_list` 配置后，仅同步静态列表，不会再动态获取需同步列表（黑白名单机制依旧生效），如: `'repo1,repo2,repo3'` 。模板仓库中的 `static_list` 使用的变量由 [`actions/github-script`](https://github.com/actions/github-script) 输出结果设置，即当前仓库（即模板仓库），如需增加或修改，使用逗号隔开，如: `'${{ steps.info.outputs.result }},MY_REPO'` 。同时，设置仓库名称时需要注意以下问题：
+`static_list` 配置后，仅同步静态列表，不会再动态获取需同步列表（黑白名单机制依旧生效），如: `'repo1,repo2,repo3'` 。同时，设置仓库名称时需要注意以下问题：
 
 - 仓库名称注意大小写和符号。
-- 当前的 `hub-mirror-action@v0.09` 会对克隆仓库进行镜像同步，会在另一个 `hub` 中创建 `GitHub` 下克隆的仓库（`Gitee` 中无法显示克隆关系）。
-- 当前的 `hub-mirror-action@v0.09` 对私有仓库**无法完成**镜像同步，可能会打断同步过程，造成部分仓库未同步。
+- [`hub-mirror-action@v0.10`](https://github.com/marketplace/actions/hub-mirror-action) 会对克隆仓库进行镜像同步，会在另一个 `hub` 中创建 `GitHub` 下克隆的仓库（`Gitee` 中无法显示克隆关系）。
+- **[`hub-mirror-action@v0.10`](https://github.com/marketplace/actions/hub-mirror-action) 对私有仓库和空仓库无法完成镜像同步**，会设置错误，但不会打断同步过程，对其他的仓库仍然能够完成同步并在最后给出统计信息。
+
+**[`Template`](./template) 中的配置:**
+
+1. [`sync2gitee.yml`](./template/sync2gitee.yml) 和 [`sync2gitee.cached.yml`](./template/sync2gitee.cached.yml) 中的 `static_list` 使用的变量由 [`actions/github-script`](https://github.com/actions/github-script) 输出结果设置，即当前仓库（即模板仓库），如需增加或修改，使用逗号隔开，如: `'${{ steps.info.outputs.result }},MY_REPO'` 。这两个示例一般用于[单仓库使用](#单仓库使用)。
+2. [`sync2gitee.list.yml`](./template/sync2gitee.list.yml) 中的 `static_list` 使用的变量设置为 [`yi-Xu-0100/repo-list-generator`](https://github.com/marketplace/actions/repo-list-generator) 生成的 `repoList` 。`repoList` 默认会把私有仓库和克隆仓库去除，但**仍然会包含空仓库**，可能触发错误，一般用于[多仓库使用](#多仓库使用)。
 
 ### `account_type`(建议)
 
-`account_type` 配置使用该工作流的用户属性。
+`account_type` 配置使用需要同步仓库的用户属性，请确保类型相同，无法指定两个。
 
 - 如果是个人，则需要设置为 `user` 。
 - 如果是组织，则需要设置为 `org` 。
@@ -121,16 +123,26 @@
 
 `cache_path` 选项需要搭配 [`actions/cache`](https://github.com/actions/cache) 使用，配置后会对同步的仓库内容进行缓存，缩短仓库同步时间。
 
-- [`sync2gitee(cache).yml`](./template/sync2gitee.cached.yml) 是配置了 `cache_path` 的使用示例。
 - [`sync2gitee.yml`](./template/sync2gitee.yml) 是未配置 `cache_path` 的使用示例。
-
-## 单仓库使用
-
-由于 `static_list` 仅设置了当前仓库。可以不增加参数，而选择将 [`template`](./template) 文件夹下的示例脚本放置在任意仓库的 `.github/workflows` 下，以实现仅同步含有该文件的仓库的配置。
-
-PS：你同样需要 [配置参数](#配置参数) 。
+- [`sync2gitee.cached.yml`](./template/sync2gitee.cached.yml) 和 [`sync2gitee.list.yml`](./template/sync2gitee.list.yml) 是配置了 `cache_path` 的使用示例。
 
 ## FAQ
+
+### 如何挑选模板
+
+#### 单仓库使用
+
+单仓库一般仓库体积不大，由于 [`sync2gitee.yml`](./template/sync2gitee.yml) 和 [`sync2gitee.cached.yml`](./template/sync2gitee.cached.yml) 中的 `static_list` 仅设置了当前仓库（自动获取的仓库名），可以不增加参数，而选择将 [`template`](./template) 文件夹下的对应示例文件放置在任意仓库的 `.github/workflows` 下，以实现仅同步*含有该文件的仓库*的配置（选其中之一即可）。
+
+**[`sync2gitee.cached.yml`](./template/sync2gitee.cached.yml) 的使用说明在 [单仓库使用配置](#单仓库使用配置) 中给出。二者的 `hub-mirror-action` 部分参数同样需要 [配置](#配置参数) 。**
+
+#### 多仓库使用
+
+由于 `hub-mirror-action` 的自动获取仓库名称会包含克隆的仓库，所以少量同步可以在 [单仓库使用](#单仓库使用) 的情况下 [配置 `static_list` 参数](#static_list建议)，完成对指定仓库的同步配置。
+
+如果希望完成用户名下所有仓库同步的同步配置，可以使用 [`sync2gitee.list.yml`](./template/sync2gitee.list.yml) ，该示例使用 [`yi-Xu-0100/repo-list-generator`](https://github.com/marketplace/actions/repo-list-generator) 获取用户的所有的仓库名称，而**其产生的 `repoList` 参数会剔除克隆仓库和私有仓库名称**。
+
+**详细的配置说明见 [多仓库使用配置](#多仓库使用配置) ，`hub-mirror-action` 部分参数同样需要 [配置](#配置参数) 。**
 
 ### `Gitee` 无法创建 `XXX` 仓库如何解决
 
@@ -142,44 +154,87 @@ PS：你同样需要 [配置参数](#配置参数) 。
 2. 方案 1 由于官方更改规则，现已失效，导入的规则和创建规则一致，官方文档应该会稍后完成更新【2020-10-14】。
 3. 如果仓库名称以**字母或特殊符号**开头，可以使用 [重命名仓库](https://docs.github.com/cn/free-pro-team@latest/github/administering-a-repository/renaming-a-repository) 或者 [删除仓库](https://docs.github.com/cn/free-pro-team@latest/github/administering-a-repository/deleting-a-repository) 并[创建仓库](https://docs.github.com/cn/free-pro-team@latest/github/creating-cloning-and-archiving-repositories/creating-a-repository-on-github) 的方式完成仓库改名。
 
-### `actions/cache` 的使用方法
+### [`actions/cache`](https://github.com/actions/cache) 的使用方法
 
-仓库中的同步流程使用了 `actions/cache` 这一个动作完成仓库的缓存。模板中对于同步仓库的设置已经完成，**不需要修改**。为了完成 cache 的参数配置，同时需要构建 `key` 所需要的参数，所以使用了**三个步骤**去完成 `cache` 的配置，文件见 [`template/sync2gitee.cache.yaml`](./template/sync2gitee.cached.yml)。
+#### 单仓库使用配置
+
+仓库中的同步流程使用了 [`actions/cache`](https://github.com/actions/cache) 这一个动作完成仓库的缓存。[`template/sync2gitee.cache.yaml`](./template/sync2gitee.cached.yml) 中对于缓存仓库的设置已经完成，**不需要修改**。为了完成 `cache` 的参数配置，同时需要构建 `key` 所需要的参数，所以使用了**三个步骤**去完成 `cache` 的配置。
 
 ```yaml
-- name: Get current repository name
+- name: Get repo and time
   id: info
   uses: actions/github-script@v3.0.0
   with:
-    github-token: ${{secrets.GITHUB_TOKEN}}
     result-encoding: string
     script: |
-      core.setOutput('date', new Date(Date.now()).toISOString().replace(/[^0-9]/g, ""))
+      core.setOutput('time', new Date(Date.now()).toISOString().replace(/[^0-9]/g, ""));
+      core.setOutput('key', `${context.repo.owner}-${context.repo.repo}`);
       return context.repo.repo;
 
 - name: Cache src repos
-  uses: actions/cache@v2.1.1
+  uses: actions/cache@v2.1.2
   id: cache
   with:
     path: ${{ github.workspace }}/hub-mirror-cache
-    key: ${{ runner.os }}-${{ github.repository_owner }}-${{ steps.info.outputs.result }}-cache-${{ steps.info.outputs.date }}
-    restore-keys: ${{ runner.os }}-${{ github.repository_owner }}-${{ steps.info.outputs.result }}-cache-
+    key: ${{ runner.os }}-${{ steps.info.outputs.key }}-cache-${{ steps.info.outputs.time }}
+    restore-keys: ${{ runner.os }}-${{ steps.info.outputs.key }}-cache-
+
+- name: Mirror the GitHub repos to Gitee with cache
+  uses: Yikun/hub-mirror-action@v0.10
+  with:
+    src: github/yi-Xu-0100
+    dst: gitee/yiXu0100
+    dst_key: ${{ secrets.GITEE_PRIVATE_KEY }}
+    dst_token: ${{ secrets.GITEE_TOKEN }}
+    static_list: '${{ steps.info.outputs.result }}'
+    cache_path: /github/workspace/hub-mirror-cache
+    account_type: user
+    force_update: true
 ```
 
-说明：
+**说明：**
 
-- `id` 为 `info` 的步骤使用了 `actions/github-script` 获取仓库名称（同时用于了 [`static_list` 参数配置](#static_list建议)）和触发时间戳（`ISO` 格式并仅保留数字）。
-- `path` 变量设置的路径的设置与 `hub-mirror-action` 中的参数 `cache_path` 设置的路径相对应（建议不修改，当前配置的目录为参数配置的默认值）。
-- `key` 变量的设置与运行环境、仓库拥有者和仓库名称相关，最后以触发时间戳确定特异性（相关信息已通过流程步骤获取，建议不修改），保证每次会对内容重新缓存。
+- `id` 为 `info` 的步骤使用了 [`actions/github-script`](https://github.com/actions/github-script) 获取仓库名称用于 [`static_list` 参数配置](#static_list建议)，触发时间戳（`ISO` 格式并仅保留数字）和 `cache` 使用的关键词 `{owner}-{repo}` 。
+- `path` 变量设置的路径的设置与 `hub-mirror-action` 中的参数 `cache_path` 设置的路径（`/github/workspace/hub-mirror-cache`）相对应（建议不修改，当前配置的路径为参数配置的默认值）。
+- `key` 变量的设置与运行环境（由 `runner.os` 获取）、仓库拥有者和仓库名称的键值对（由 `steps.info.outputs.key` 获取），最后以触发时间戳（由 `steps.info.outputs.time` 获取）确定特异性（相关信息已通过流程步骤获取，建议不修改），保证每次会对内容重新缓存。
 - `restore-keys` 仅匹配前置关键词，这样保证每次获取最近一次的缓存结果。
 - `key` 在 `7` 天未触发或者缓存结果存储大小大于 `5G` 的情况下，会删除旧的缓存文件。
-- 详细 `cache` 的配置说明见 [`cache` 仓库文档](https://github.com/actions/cache) 。
+- 详细 `cache` 的配置说明见 [`cache` 仓库文档](https://github.com/actions/cache#readme) 。
+- `hub-mirror-action` 部分参数仍然需要 [配置](#配置参数) 。
 
-### `secrets.GITHUB_TOKEN` 配置方法
+#### 多仓库使用配置
 
-**该参数无需配置，由 `GitHub` 自动创建并获取。**
+仓库中的同步流程使用了 [`actions/cache`](https://github.com/actions/cache) 这一个动作完成仓库的缓存。[`template/sync2gitee.list.yaml`](./template/sync2gitee.list.yml) 中对于缓存仓库的设置已经完成，具体配置和 [单仓库使用配置](#单仓库使用配置) 一致。下面主要介绍 `static_list` 的配置。
 
-参考见：[工作流中的身份验证](https://docs.github.com/cn/free-pro-team@latest/actions/reference/authentication-in-a-workflow)
+```yaml
+- name: Generate repo list
+  id: repo
+  uses: yi-Xu-0100/repo-list-generator@v0.2.0
+  with:
+    user: yi-Xu-0100
+    my_token: ${{ secrets.REPO_TOKEN }}
+
+- name: Mirror hub with cache and list
+  uses: Yikun/hub-mirror-action@v0.10
+  with:
+    src: github/yi-Xu-0100
+    dst: gitee/yiXu0100
+    dst_key: ${{ secrets.GITEE_PRIVATE_KEY }}
+    dst_token: ${{ secrets.GITEE_TOKEN }}
+    static_list: '${{ steps.repo.outputs.repoList }}'
+    cache_path: /github/workspace/hub-mirror-cache
+    account_type: user
+    force_update: true
+```
+
+**说明：**
+
+- `id` 为 `repo` 的步骤使用了 [`yi-Xu-0100/repo-list-generator`](https://github.com/marketplace/actions/repo-list-generator) 获取用户的所有的仓库名称。
+- `${{ secrets.REPO_TOKEN }}` 的配置参考 [Generate `my_token`](https://github.com/marketplace/actions/repo-list-generator#-generate-my_token) 。
+- `static_list` 使用 `${{ steps.repo.outputs.repoList }}` 指定同步列表，`repoList` 参数会剔除克隆仓库和私有仓库名称。
+- 如果需要剔除部分仓库，可以使用 [black_list](https://github.com/marketplace/actions/hub-mirror-action#可选参数) 。
+- 如果需要添加未包含的仓库，可以使用 [white_list](https://github.com/marketplace/actions/hub-mirror-action#可选参数) 。
+- `hub-mirror-action` 部分参数仍然需要 [配置](#配置参数) 。
 
 ## 鸣谢
 
@@ -188,6 +243,7 @@ PS：你同样需要 [配置参数](#配置参数) 。
 - [actions/checkout](https://github.com/actions/checkout)
 - [actions/cache](https://github.com/actions/cache)
 - [actions/github-script](https://github.com/actions/github-script)
+- [yi-Xu-0100/repo-list-generator](https://github.com/marketplace/actions/repo-list-generator)
 
 ## 许可证
 

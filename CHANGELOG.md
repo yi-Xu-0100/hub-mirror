@@ -9,6 +9,18 @@
 
 ## [Unreleased]
 
+### ✨ 增加
+
+- 📝 增加 [cache 使用方法](./README.md#actionscache-的使用方法)
+- 🔧 增加 [list](./template/sync2gitee.list.yml) 模板
+- 📝 增加 [如何挑选模板](./README.md#如何挑选模板) 说明
+
+### ♻️ 变化
+
+- 💬 更新[关于创建仓库失败的说明内容](./README.md##gitee-无法创建-xxx-仓库如何解决)
+- ⬆️ 升级 hub-mirror-action 到 [v0.10](https://github.com/marketplace/actions/hub-mirror-action)
+- 🔥 去除 `secrets.GITHUB_TOKEN` 配置方法
+
 ## [1.1.0] - 2020-10-11
 
 ### ✨ 增加
@@ -31,7 +43,7 @@
 ### ✨ 增加
 
 - 📝 完成 [README.md](./README.md)
-- 📝 完成 [CHANGELOGE.md](./CHANGELOG.md)
+- 📝 完成 [CHANGELOG.md](./CHANGELOG.md)
 - 🔧 增加未配置 [cache](./README.md#cache_path可选) 的 [使用示例](./.github/workflows/sync2gitee.yml)
 - 🔧 增加配置了 [cache](./README.md#cache_path可选) 的 [使用示例](<./.github/workflows/sync2gitee(cached).yml>)
 - 👷 增加自动发布 release 的 [工作流](./.github/workflows/autoRelease.yml)

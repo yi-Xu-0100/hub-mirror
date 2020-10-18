@@ -1,9 +1,9 @@
 name: sync2gitee(list)
-# version: 1.0.2
+# version: 1.0.3
 # author: [yiXu](https://github.com/yi-Xu-0100)
 # guide: [yi-Xu-0100/hub-mirror](https://github.com/yi-Xu-0100/hub-mirror)
 # template: [sync2gitee.list.yml](https://github.com/yi-Xu-0100/hub-mirror/blob/main/template/sync2gitee.list.yml)
-# lastmod: 2020-10-18 16:56:26
+# lastmod: 2020-10-18 19:48:01
 
 on:
   workflow_dispatch:
@@ -26,7 +26,15 @@ jobs:
           result-encoding: string
           script: |
             core.setOutput('time', new Date(Date.now()).toISOString().replace(/[^0-9]/g, ""));
-            return `${context.repo.owner}-${context.repo.repo}`;
+            core.setOutput('key', `${context.repo.owner}-${context.repo.repo}`);
+
+      - name: Cache src repos
+        uses: actions/cache@v2.1.2
+        id: cache
+        with:
+          path: ${{ github.workspace }}/hub-mirror-cache
+          key: ${{ runner.os }}-${{ steps.info.outputs.key }}-list-cache-${{ steps.info.outputs.time }}
+          restore-keys: ${{ runner.os }}-${{ steps.info.outputs.key }}-list-
 
       - name: Generate repo list
         id: repo
@@ -34,14 +42,6 @@ jobs:
         with:
           user: yi-Xu-0100
           my_token: ${{ secrets.REPO_TOKEN }}
-
-      - name: Cache src repos
-        uses: actions/cache@v2.1.2
-        id: cache
-        with:
-          path: ${{ github.workspace }}/hub-mirror-cache
-          key: ${{ runner.os }}-${{ steps.info.outputs.result }}-list-cache-${{ steps.info.outputs.time }}
-          restore-keys: ${{ runner.os }}-${{ steps.info.outputs.result }}-list-
 
       - name: Mirror hub with cache and list
         uses: Yikun/hub-mirror-action@v0.10

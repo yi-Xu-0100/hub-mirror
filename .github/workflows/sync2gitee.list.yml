@@ -1,9 +1,9 @@
 name: sync2gitee(list)
-# version: 1.0.1
+# version: 1.0.2
 # author: [yiXu](https://github.com/yi-Xu-0100)
 # guide: [yi-Xu-0100/hub-mirror](https://github.com/yi-Xu-0100/hub-mirror)
-# template: [sync2gitee.cached.yml](https://github.com/yi-Xu-0100/hub-mirror/blob/main/template/sync2gitee.cached.yml)
-# lastmod: 2020-10-16 08:55:46
+# template: [sync2gitee.list.yml](https://github.com/yi-Xu-0100/hub-mirror/blob/main/template/sync2gitee.list.yml)
+# lastmod: 2020-10-18 16:56:26
 
 on:
   workflow_dispatch:
@@ -13,7 +13,7 @@ on:
 
 jobs:
   run:
-    name: Sync GitHub to Gitee(Cached)
+    name: Sync GitHub to Gitee(list)
     runs-on: ubuntu-latest
     steps:
       - name: Checkout source code
@@ -23,7 +23,6 @@ jobs:
         id: info
         uses: actions/github-script@v3.0.0
         with:
-          github-token: ${{secrets.GITHUB_TOKEN}}
           result-encoding: string
           script: |
             core.setOutput('time', new Date(Date.now()).toISOString().replace(/[^0-9]/g, ""));
@@ -44,7 +43,7 @@ jobs:
           key: ${{ runner.os }}-${{ steps.info.outputs.result }}-list-cache-${{ steps.info.outputs.time }}
           restore-keys: ${{ runner.os }}-${{ steps.info.outputs.result }}-list-
 
-      - name: Mirror the GitHub repos to Gitee with cache
+      - name: Mirror hub with cache and list
         uses: Yikun/hub-mirror-action@v0.10
         with:
           src: github/yi-Xu-0100

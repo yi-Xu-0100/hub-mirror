@@ -38,7 +38,7 @@ jobs:
 
       - name: Generate repo list
         id: repo
-        uses: yi-Xu-0100/repo-list-generator@v0.0.2
+        uses: yi-Xu-0100/repo-list-generator@v0.2.0
         with:
           user: yi-Xu-0100
           my_token: ${{ secrets.REPO_TOKEN }}

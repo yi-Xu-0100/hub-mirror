@@ -29,7 +29,7 @@ jobs:
             core.setOutput('key', `${context.repo.owner}-${context.repo.repo}`);
             return context.repo.repo;
 
-      - name: Cache src repos
+      - name: Cache src repo
         uses: actions/cache@v2.1.2
         id: cache
         with:
@@ -37,7 +37,7 @@ jobs:
           key: ${{ runner.os }}-${{ steps.info.outputs.key }}-cache-${{ steps.info.outputs.time }}
           restore-keys: ${{ runner.os }}-${{ steps.info.outputs.key }}-cache-
 
-      - name: Mirror the GitHub repos to Gitee with cache
+      - name: Mirror the GitHub repo to Gitee with cache
         uses: Yikun/hub-mirror-action@v0.11
         with:
           src: github/yi-Xu-0100

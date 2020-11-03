@@ -26,6 +26,6 @@ jobs:
           dst: gitee/yiXu0100
           dst_key: ${{ secrets.GITEE_PRIVATE_KEY }}
           dst_token: ${{ secrets.GITEE_TOKEN }}
-          static_list: 'MY_REPO'
+          static_list: 'MY_REPO,Learn-for-coding'
           account_type: user
           force_update: true

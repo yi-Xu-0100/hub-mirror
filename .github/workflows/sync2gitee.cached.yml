@@ -44,7 +44,7 @@ jobs:
           dst: gitee/yiXu0100
           dst_key: ${{ secrets.GITEE_PRIVATE_KEY }}
           dst_token: ${{ secrets.GITEE_TOKEN }}
-          static_list: '${{ steps.info.outputs.result }}'
+          static_list: '${{ steps.info.outputs.result }},learn-scripts'
           cache_path: /github/workspace/hub-mirror-cache
           account_type: user
           force_update: true

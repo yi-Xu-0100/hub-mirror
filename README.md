@@ -163,7 +163,7 @@
 ```yaml
 - name: Get repo and time
   id: info
-  uses: actions/github-script@v3.0.0
+  uses: actions/github-script@v3.1
   with:
     result-encoding: string
     script: |
@@ -172,7 +172,7 @@
       return context.repo.repo;
 
 - name: Cache src repos
-  uses: actions/cache@v2.1.2
+  uses: actions/cache@v2.1.3
   id: cache
   with:
     path: ${{ github.workspace }}/hub-mirror-cache
@@ -180,7 +180,7 @@
     restore-keys: ${{ runner.os }}-${{ steps.info.outputs.key }}-cache-
 
 - name: Mirror the GitHub repos to Gitee with cache
-  uses: Yikun/hub-mirror-action@v0.10
+  uses: Yikun/hub-mirror-action@v0.12
   with:
     src: github/yi-Xu-0100
     dst: gitee/yiXu0100
@@ -209,13 +209,13 @@
 ```yaml
 - name: Generate repo list
   id: repo
-  uses: yi-Xu-0100/repo-list-generator@v0.2.0
+  uses: yi-Xu-0100/repo-list-generator@v0.4.1
   with:
     user: yi-Xu-0100
     my_token: ${{ secrets.REPO_TOKEN }}
 
 - name: Mirror hub with cache and list
-  uses: Yikun/hub-mirror-action@v0.10
+  uses: Yikun/hub-mirror-action@v0.12
   with:
     src: github/yi-Xu-0100
     dst: gitee/yiXu0100

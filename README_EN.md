@@ -20,9 +20,7 @@ Template usage repository of [GitHub action-hub-mirror-action](https://github.co
   - [`src`(required)](#srcrequired)
   - [dst(required)](#dstrequired)
   - [`dst_key`(required)](#dst_keyrequired)
-    - [Set `dst_key`](#set-dst_key)
   - [`dst_token`(required)](#dst_tokenrequired)
-    - [Set `dst_token`](#set-dst_token)
   - [`static_list` (recommended)](#static_list-recommended)
   - [`acount_type` (recommended)](#acount_type-recommended)
   - [`force_update` (recommended)](#force_update-recommended)
@@ -147,7 +145,7 @@ The synchronization process in the repository uses the action `actions/cache` to
 ```yaml
 - name: Get current repository name
   id: info
-  uses: actions/github-script@v3.0.0
+  uses: actions/github-script@v3.1
   with:
     github-token: ${{secrets.GITHUB_TOKEN}}
     result-encoding: string
@@ -156,7 +154,7 @@ The synchronization process in the repository uses the action `actions/cache` to
       return context.repo.repo;
 
 - name: Cache src repos
-  uses: actions/cache@v2.1.1
+  uses: actions/cache@v2.1.3
   id: cache
   with:
     path: ${{ github.workspace }}/hub-mirror-cache

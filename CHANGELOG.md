@@ -19,7 +19,11 @@
 
 - 💬 更新[关于创建仓库失败的说明内容](./README.md##gitee-无法创建-xxx-仓库如何解决)
 - ⬆️ 升级 hub-mirror-action 到 [v0.10](https://github.com/marketplace/actions/hub-mirror-action)
+
+### 🔥 移除
+
 - 🔥 去除 `secrets.GITHUB_TOKEN` 配置方法
+- 🔥 去除 `autoRelease` 和 `release` 徽章
 
 ## [1.1.0] - 2020-10-11
 

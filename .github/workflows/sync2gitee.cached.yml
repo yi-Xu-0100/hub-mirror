@@ -7,13 +7,10 @@ name: sync2gitee(cached)
 
 on:
   workflow_run:
-    workflows: ['sync2gitee(cached)']
+    workflows: ['sync2gitee']
     branches: [main]
     types:
       - completed
-  schedule:
-    # UTC 17:00 -> CST (China) 1:00 see https://datetime360.com/cn/utc-cst-china-time/
-    - cron: '0 17 * * *'
 
 jobs:
   run:
@@ -48,10 +45,15 @@ jobs:
           dst: gitee/yiXu0100
           dst_key: ${{ secrets.GITEE_PRIVATE_KEY }}
           dst_token: ${{ secrets.GITEE_TOKEN }}
-          static_list: '${{ steps.info.outputs.result }},learn-scripts'
+          static_list: 'Learn-for-coding' #'${{ steps.info.outputs.result }}'
           cache_path: /github/workspace/hub-mirror-cache
           account_type: user
           force_update: true
+
+      - name: delete block_list cache directory
+        run: |
+          rm -rf ${{ github.workspace }}/hub-mirror-cache/learn-scripts/
+          rm -rf ${{ github.workspace }}/hub-mirror-cache/hub-mirror/
 
       - name: Print cache path
         run: |

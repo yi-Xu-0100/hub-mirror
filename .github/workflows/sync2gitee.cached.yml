@@ -6,7 +6,11 @@ name: sync2gitee(cached)
 # lastmod: 2020-10-18 19:18:38
 
 on:
-  push:
+  workflow_run:
+    workflows: ['sync2gitee(cached)']
+    branches: [main]
+    types:
+      - completed
   schedule:
     # UTC 17:00 -> CST (China) 1:00 see https://datetime360.com/cn/utc-cst-china-time/
     - cron: '0 17 * * *'

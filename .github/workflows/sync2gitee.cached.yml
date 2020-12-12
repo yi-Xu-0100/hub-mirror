@@ -50,10 +50,6 @@ jobs:
           account_type: user
           force_update: true
 
-      - name: delete block_list cache directory
-        run: |
-          rm -rf ${{ github.workspace }}/hub-mirror-cache/Learn-for-coding/
-
       - name: Print cache path
         run: |
           ls -la ${{ github.workspace }}/hub-mirror-cache

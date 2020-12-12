@@ -47,17 +47,11 @@ jobs:
           dst: gitee/yiXu0100
           dst_key: ${{ secrets.GITEE_PRIVATE_KEY }}
           dst_token: ${{ secrets.GITEE_TOKEN }}
-          black_list: 'empty-repo,MyWiki,Learn-for-coding,learn-scripts,hub-mirror'
+          black_list: 'empty-repo,MyWiki,hub-mirror'
           static_list: '${{ steps.repo.outputs.repoList }}'
           cache_path: /github/workspace/hub-mirror-cache
           account_type: user
           force_update: true
-
-      - name: delete block_list cache directory
-        run: |
-          rm -rf ${{ github.workspace }}/hub-mirror-cache/Learn-for-coding/
-          rm -rf ${{ github.workspace }}/hub-mirror-cache/learn-scripts/
-          rm -rf ${{ github.workspace }}/hub-mirror-cache/hub-mirror/
 
       - name: Print cache path
         run: |

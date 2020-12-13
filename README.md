@@ -1,4 +1,4 @@
-## Sync GitHub to other hub
+# Sync GitHub to other hub
 
 [![sync2gitee](https://github.com/yi-Xu-0100/hub-mirror/workflows/sync2gitee/badge.svg)](./template/sync2gitee.yml)
 [![sync2gitee(cached)](<https://github.com/yi-Xu-0100/hub-mirror/workflows/sync2gitee(cached)/badge.svg>)](./template/sync2gitee.cached.yml)
@@ -14,7 +14,6 @@
 
 ## 目录
 
-- [Sync GitHub to other hub](#sync-github-to-other-hub)
 - [目录](#目录)
 - [配置参数](#配置参数)
   - [`src`(需要)](#src需要)

@@ -15,7 +15,7 @@ on:
 
 jobs:
   run:
-    name: Sync GitHub to Gitee(Cached)
+    name: Sync GitHub to Gitee(list)
     runs-on: ubuntu-latest
     steps:
       - name: Checkout source code
@@ -23,24 +23,25 @@ jobs:
 
       - name: Get repo and time
         id: info
-        uses: actions/github-script@v3.1
+        uses: actions/github-script@v3.1.0
         with:
           result-encoding: string
           script: |
             core.setOutput('time', new Date(Date.now()).toISOString().replace(/[^0-9]/g, ""));
             core.setOutput('key', `${context.repo.owner}-${context.repo.repo}`);
-            return context.repo.repo;
 
-      - name: Cache src repo
+      - name: Cache src repos
         uses: actions/cache@v2.1.3
         id: cache
         with:
           path: ${{ github.workspace }}/hub-mirror-cache
-          key: ${{ runner.os }}-${{ steps.info.outputs.key }}-cache-${{ steps.info.outputs.time }}
-          restore-keys: ${{ runner.os }}-${{ steps.info.outputs.key }}-cache-
+          key: ${{ runner.os }}-${{ steps.info.outputs.key }}-list-cache-${{ steps.info.outputs.time }}
+          restore-keys: ${{ runner.os }}-${{ steps.info.outputs.key }}-list-
 
       - name: delete the wrong cache directory
-        run: rm -rf ${{ github.event.inputs.black_list }}
+        run: |
+          cd ${{ github.workspace }}/
+          rm -rf ${{ github.event.inputs.black_list }}/
 
       - name: Print cache path
         run: |

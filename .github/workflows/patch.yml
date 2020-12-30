@@ -1,0 +1,47 @@
+name: patch
+# version: 1.3.0
+# author: [yiXu](https://github.com/yi-Xu-0100)
+# guide: [yi-Xu-0100/hub-mirror](https://github.com/yi-Xu-0100/hub-mirror)
+# template: [sync2gitee.cached.yml](https://github.com/yi-Xu-0100/hub-mirror/blob/main/template/sync2gitee.cached.yml)
+# lastmod: 2020-10-18 19:18:38
+
+on:
+  workflow_dispatch:
+    inputs:
+      black_list:
+        description: 'Repositories excluded in the synchronization action'
+        required: false
+        default: ''
+
+jobs:
+  run:
+    name: Sync GitHub to Gitee(Cached)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@v2.3.4
+
+      - name: Get repo and time
+        id: info
+        uses: actions/github-script@v3.1
+        with:
+          result-encoding: string
+          script: |
+            core.setOutput('time', new Date(Date.now()).toISOString().replace(/[^0-9]/g, ""));
+            core.setOutput('key', `${context.repo.owner}-${context.repo.repo}`);
+            return context.repo.repo;
+
+      - name: Cache src repo
+        uses: actions/cache@v2.1.3
+        id: cache
+        with:
+          path: ${{ github.workspace }}/hub-mirror-cache
+          key: ${{ runner.os }}-${{ steps.info.outputs.key }}-cache-${{ steps.info.outputs.time }}
+          restore-keys: ${{ runner.os }}-${{ steps.info.outputs.key }}-cache-
+
+      - name: delete the wrong cache directory
+        run: rm -rf ${{ github.event.inputs.black_list }}
+
+      - name: Print cache path
+        run: |
+          ls -la ${{ github.workspace }}/hub-mirror-cache

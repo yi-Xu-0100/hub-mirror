@@ -8,14 +8,14 @@ name: patch
 on:
   workflow_dispatch:
     inputs:
-      black_list:
-        description: 'Repositories excluded in the synchronization action'
+      repo:
+        description: 'Repository excluded in the synchronization action'
         required: false
         default: ''
 
 jobs:
   run:
-    name: Sync GitHub to Gitee(list)
+    name: Delete the wrong cache directory
     runs-on: ubuntu-latest
     steps:
       - name: Checkout source code
@@ -38,10 +38,10 @@ jobs:
           key: ${{ runner.os }}-${{ steps.info.outputs.key }}-list-cache-${{ steps.info.outputs.time }}
           restore-keys: ${{ runner.os }}-${{ steps.info.outputs.key }}-list-
 
-      - name: delete the wrong cache directory
+      - name: Delete the wrong cache directory
         run: |
-          cd ${{ github.workspace }}/
-          rm -rf ${{ github.event.inputs.black_list }}/
+          cd ${{ github.workspace }}/hub-mirror-cache/
+          rm -rf ${{ github.event.inputs.repo }}/
 
       - name: Print cache path
         run: |

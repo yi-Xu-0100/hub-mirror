@@ -40,8 +40,7 @@ jobs:
         id: repo
         uses: yi-Xu-0100/repo-list-generator@v0.4.1
         with:
-          user: yi-xu-test-organization
-          block_list: empty-repo
+          user: OI-wiki
 
       - name: Mirror hub with cache and list
         uses: Yikun/hub-mirror-action@v0.12

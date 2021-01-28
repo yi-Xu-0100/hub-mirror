@@ -46,7 +46,7 @@ jobs:
       - name: Mirror hub with cache and list
         uses: Yikun/hub-mirror-action@v0.12
         with:
-          src: github/yi-xu-test-organization
+          src: github/OI-wiki
           dst: gitee/yi-xu-test-organization
           dst_key: ${{ secrets.GITEE_PRIVATE_KEY }}
           dst_token: ${{ secrets.GITEE_TOKEN }}

@@ -83,11 +83,11 @@ Take `Gitee` as an example, get the token and add it to `GitHub`.
 
    PS: The token only appears once, please save it(it can be generated multiple times).
 
-   ![Generate a personal access token](./static/secret_key.png)
+   ![Generate a personal access token](./static/generate_secret_token.png)
 
 2. Add the token to the `GitHub` repository, create a `GITEE_TOKEN` variable through the `Secrets` in the `GitHub` **repository settings**, and copy the private key content to the value area.
 
-   ![Add the token](./static/secret_key_1.png)
+   ![Add the token](./static/add_secret_token.png)
 
 ### `static_list` (recommended)
 

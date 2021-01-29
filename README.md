@@ -82,11 +82,11 @@
 
    PS：令牌仅出现一次，请保存它（它可以生成多次）。
 
-   ![生成个人访问令牌](./static/secret_key.png)
+   ![生成个人访问令牌](./static/generate_secret_token.png)
 
 2. 将令牌添加到 `GitHub` 存储库，通过 `GitHub` **仓库设置** 中的 `Secrets` 创建一个 `GITEE_TOKEN` 变量，并将私钥内容复制到值区域。
 
-   ![添加令牌](./static/secret_key_1.png)
+   ![添加令牌](./static/add_secret_token.png)
 
 ### `static_list`(建议)
 

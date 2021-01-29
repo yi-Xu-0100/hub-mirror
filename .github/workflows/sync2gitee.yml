@@ -29,3 +29,4 @@ jobs:
           static_list: 'MY_REPO'
           account_type: user
           force_update: true
+          timeout: 300

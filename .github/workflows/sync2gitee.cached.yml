@@ -49,6 +49,7 @@ jobs:
           cache_path: /github/workspace/hub-mirror-cache
           account_type: user
           force_update: true
+          timeout: 300
 
       - name: Print cache path
         run: |

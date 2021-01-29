@@ -53,6 +53,7 @@ jobs:
           account_type: org
           force_update: true
           clone_style: ssh
+          timeout: 300
 
       - name: Print cache path
         run: |

@@ -1,9 +1,9 @@
 name: sync2gitee(list)
-# version: 1.0.3
+# version: 1.0.4
 # author: [yiXu](https://github.com/yi-Xu-0100)
 # guide: [yi-Xu-0100/hub-mirror](https://github.com/yi-Xu-0100/hub-mirror)
 # template: [sync2gitee.list.yml](https://github.com/yi-Xu-0100/hub-mirror/blob/main/template/sync2gitee.list.yml)
-# lastmod: 2020-10-18 19:48:01
+# lastmod: 2021-01-29 23:06:10
 
 on:
   workflow_dispatch:
@@ -16,8 +16,6 @@ jobs:
     name: Sync GitHub to Gitee(list)
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout source code
-        uses: actions/checkout@v2.3.4
 
       - name: Get repo and time
         id: info

@@ -1,9 +1,9 @@
 name: sync2gitee(cached)
-# version: 1.3.0
+# version: 1.3.1
 # author: [yiXu](https://github.com/yi-Xu-0100)
 # guide: [yi-Xu-0100/hub-mirror](https://github.com/yi-Xu-0100/hub-mirror)
 # template: [sync2gitee.cached.yml](https://github.com/yi-Xu-0100/hub-mirror/blob/main/template/sync2gitee.cached.yml)
-# lastmod: 2020-12-10 09:24:45
+# lastmod: 2021-01-29 23:06:39
 on:
   push:
   schedule:
@@ -15,8 +15,6 @@ jobs:
     name: Sync GitHub to Gitee(Cached)
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout source code
-        uses: actions/checkout@v2.3.4
 
       - name: Get repo and time
         id: info

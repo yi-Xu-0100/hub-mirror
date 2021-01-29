@@ -16,8 +16,6 @@ jobs:
     name: Sync GitHub to Gitee(list)
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout source code
-        uses: actions/checkout@v2.3.4
 
       - name: Get repo and time
         id: info
@@ -49,7 +47,7 @@ jobs:
           dst: gitee/yi-xu-test-organization
           dst_key: ${{ secrets.GITEE_PRIVATE_KEY }}
           dst_token: ${{ secrets.GITEE_TOKEN }}
-          black_list: 'empty-repo,MyWiki,hub-mirror'
+          black_list: 'gitment'
           static_list: '${{ steps.repo.outputs.repoList }}'
           cache_path: /github/workspace/hub-mirror-cache
           account_type: org

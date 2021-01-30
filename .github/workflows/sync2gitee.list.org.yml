@@ -7,6 +7,11 @@ name: sync2gitee(list)-org
 
 on:
   workflow_dispatch:
+    inputs:
+      debug:
+        description: 'hub mirror debug'
+        required: false
+        default: 'false'
   schedule:
     # UTC 17:30 -> CST (China) 1:30 see https://datetime360.com/cn/utc-cst-china-time/
     - cron: '30 17 * * *'
@@ -54,6 +59,7 @@ jobs:
           force_update: true
           clone_style: ssh
           timeout: 300
+          debug: ${{ github.event.inputs.debug }}
 
       - name: Print cache path
         run: |

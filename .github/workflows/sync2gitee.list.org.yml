@@ -12,8 +12,7 @@ on:
         description: 'hub mirror debug'
         required: false
         default: 'false'
-    version:
-      debug:
+      version:
         description: 'hub mirror version'
         required: false
         default: 'master'
@@ -51,7 +50,7 @@ jobs:
           user: OI-wiki
 
       - name: Mirror hub with cache and list
-        uses: Yikun/hub-mirror-action@${{ github.event.inputs.debug }}
+        uses: Yikun/hub-mirror-action@${{ github.event.inputs.version }}
         with:
           src: github/OI-wiki
           dst: gitee/yi-xu-test-organization

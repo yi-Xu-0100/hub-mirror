@@ -12,9 +12,6 @@ on:
         description: 'debug of hub mirror action'
         required: false
         default: 'false'
-  schedule:
-    # UTC 17:30 -> CST (China) 1:30 see https://datetime360.com/cn/utc-cst-china-time/
-    - cron: '30 17 * * *'
 
 jobs:
   run:
@@ -36,8 +33,8 @@ jobs:
         id: cache
         with:
           path: ${{ github.workspace }}/hub-mirror-cache
-          key: ${{ runner.os }}-${{ steps.info.outputs.key }}-list-org-cache-${{ steps.info.outputs.time }}
-          restore-keys: ${{ runner.os }}-${{ steps.info.outputs.key }}-list-org-
+          key: ${{ runner.os }}-${{ steps.info.outputs.key }}-org-list-cache-${{ steps.info.outputs.time }}
+          restore-keys: ${{ runner.os }}-${{ steps.info.outputs.key }}-org-list-
 
       - name: Generate repo list
         id: repo

@@ -54,7 +54,6 @@ jobs:
           cache_path: /github/workspace/hub-mirror-cache
           account_type: org
           force_update: true
-          clone_style: ssh
           timeout: 300
           debug: ${{ github.event.inputs.debug }}
 

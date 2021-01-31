@@ -12,14 +12,6 @@ on:
         description: 'debug of hub mirror action'
         required: false
         default: 'false'
-      version:
-        description: 'version of hub mirror action'
-        required: false
-        default: 'master'
-      author:
-        description: 'author hub mirror action'
-        required: false
-        default: 'Yikun'
   schedule:
     # UTC 17:30 -> CST (China) 1:30 see https://datetime360.com/cn/utc-cst-china-time/
     - cron: '30 17 * * *'
@@ -54,7 +46,7 @@ jobs:
           user: OI-wiki
 
       - name: Mirror hub with cache and list
-        uses: ${{ github.event.inputs.author }}/hub-mirror-action@${{ github.event.inputs.version }}
+        uses: yi-Xu-0100/hub-mirror-action@patch-2
         with:
           src: github/OI-wiki
           dst: gitee/yi-xu-test-organization

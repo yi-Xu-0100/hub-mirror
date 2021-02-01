@@ -36,7 +36,7 @@ jobs:
 
       - name: Generate repo list
         id: repo
-        uses: yi-Xu-0100/repo-list-generator@v0.4.1
+        uses: yi-Xu-0100/repo-list-generator@v1.0.0
 
       - name: Mirror hub with cache and list
         uses: Yikun/hub-mirror-action@v0.13
@@ -45,7 +45,7 @@ jobs:
           dst: gitee/yiXu0100
           dst_key: ${{ secrets.GITEE_PRIVATE_KEY }}
           dst_token: ${{ secrets.GITEE_TOKEN }}
-          black_list: 'empty-repo,MyWiki,hub-mirror'
+          black_list: '${{ steps.repo.outputs.repo }}'
           static_list: '${{ steps.repo.outputs.repoList }}'
           cache_path: /github/workspace/hub-mirror-cache
           account_type: user

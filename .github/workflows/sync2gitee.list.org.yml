@@ -38,18 +38,17 @@ jobs:
 
       - name: Generate repo list
         id: repo
-        uses: yi-Xu-0100/repo-list-generator@v0.4.1
+        uses: yi-Xu-0100/repo-list-generator@v1.0.0
         with:
           user: OI-wiki
 
       - name: Mirror hub with cache and list
-        uses: yi-Xu-0100/hub-mirror-action@patch-2
+        uses: Yikun/hub-mirror-action@v0.13
         with:
           src: github/OI-wiki
           dst: gitee/yi-xu-test-organization
           dst_key: ${{ secrets.GITEE_PRIVATE_KEY }}
           dst_token: ${{ secrets.GITEE_TOKEN }}
-          black_list: 'gitment'
           static_list: '${{ steps.repo.outputs.repoList }}'
           cache_path: /github/workspace/hub-mirror-cache
           account_type: org

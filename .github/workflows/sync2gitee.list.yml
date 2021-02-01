@@ -39,7 +39,7 @@ jobs:
         uses: yi-Xu-0100/repo-list-generator@v0.4.1
 
       - name: Mirror hub with cache and list
-        uses: Yikun/hub-mirror-action@v0.12
+        uses: Yikun/hub-mirror-action@v0.13
         with:
           src: github/yi-Xu-0100
           dst: gitee/yiXu0100

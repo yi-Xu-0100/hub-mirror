@@ -1,9 +1,9 @@
 name: sync2gitee(list)
-# version: 1.0.4
+# version: 1。1.0
 # author: [yiXu](https://github.com/yi-Xu-0100)
 # guide: [yi-Xu-0100/hub-mirror](https://github.com/yi-Xu-0100/hub-mirror)
 # template: [sync2gitee.list.yml](https://github.com/yi-Xu-0100/hub-mirror/blob/main/template/sync2gitee.list.yml)
-# lastmod: 2021-01-29 23:06:10
+# lastmod: 2021-02-02 10:23:02
 
 on:
   workflow_dispatch:
@@ -36,13 +36,10 @@ jobs:
 
       - name: Generate repo list
         id: repo
-        uses: yi-Xu-0100/repo-list-generator@v0.4.1
-        with:
-          user: yi-Xu-0100
-          my_token: ${{ secrets.REPO_TOKEN }}
+        uses: yi-Xu-0100/repo-list-generator@v1.0.0
 
       - name: Mirror hub with cache and list
-        uses: Yikun/hub-mirror-action@v0.12
+        uses: Yikun/hub-mirror-action@v0.13
         with:
           src: github/yi-Xu-0100
           dst: gitee/yiXu0100

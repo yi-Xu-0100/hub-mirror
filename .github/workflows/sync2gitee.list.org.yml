@@ -43,7 +43,7 @@ jobs:
           user: OI-wiki
 
       - name: Mirror hub with cache and list
-        uses: Yikun/hub-mirror-action@v0.13
+        uses: Yikun/hub-mirror-action@v1.0
         with:
           src: github/OI-wiki
           dst: gitee/yi-xu-test-organization

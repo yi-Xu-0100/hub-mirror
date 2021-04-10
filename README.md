@@ -12,25 +12,6 @@
 
 **PS：当前的模板仓库仅使用了部分参数配置同步指令，[`template`](./template) 中的示例的参数仍然需要自行修改和配置以适配个人的流程使用。**
 
-## 目录
-
-- [目录](#目录)
-- [配置参数](#配置参数)
-  - [`src`(需要)](#src需要)
-  - [`dst`(需要)](#dst需要)
-  - [`dst_key`(需要)](#dst_key需要)
-  - [`dst_token`(需要)](#dst_token需要)
-  - [`static_list`(建议)](#static_list建议)
-  - [`account_type`(建议)](#account_type建议)
-  - [`force_update`(建议)](#force_update建议)
-  - [`cache_path`(可选)](#cache_path可选)
-- [FAQ](#faq)
-  - [如何挑选模板](#如何挑选模板)
-  - [`Gitee` 无法创建 `XXX` 仓库如何解决](#gitee-无法创建-xxx-仓库如何解决)
-  - [`actions/cache` 的使用方法](#actionscache-的使用方法)
-- [鸣谢](#鸣谢)
-- [许可证](#许可证)
-
 ## 配置参数
 
 ### `src`(需要)

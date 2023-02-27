@@ -36,7 +36,7 @@ jobs:
 
       - name: Generate repo list
         id: repo
-        uses: yi-Xu-0100/repo-list-generator@v1.1.0
+        uses: yi-Xu-0100/repo-list-generator@v1.1.1
         with:
           allow_archived: false
 
